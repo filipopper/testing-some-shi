@@ -223,35 +223,37 @@
         --ub-strong: #fff;
       "
     >
-      <div class="urgency-inner">
-        <div class="urgency-icon" aria-hidden="true">
-          <i class="ri-alarm-warning-line"></i>
-        </div>
-        <div class="urgency-content">
-          <strong class="urgency-title"
-            >¡Elecciones municipales el 12 de octubre!</strong
+      <div
+        id="urgency-banner"
+        class="urgency-banner"
+        role="alert"
+        aria-live="polite"
+      >
+        <div class="urgency-inner">
+          <div class="urgency-icon" aria-hidden="true">
+            <i class="ri-rocket-2-line"></i>
+          </div>
+
+          <div class="urgency-content">
+            <strong class="urgency-title">
+              Nueva función experimental activa
+            </strong>
+
+            <span class="urgency-body">
+              Este banner es una prueba del sistema de urgencia. Tiempo
+              restante:
+              <span class="countdown"></span>
+            </span>
+          </div>
+
+          <button
+            class="urgency-close urgency-banner-close"
+            id="urgency-close"
+            aria-label="Cerrar banner"
           >
-          <span class="urgency-body"
-            >Recordá llevar tu documento de identidad. Los locales de votación
-            abren a las 8:00.</span
-          >
+            <i class="ri-close-line" aria-hidden="true"></i>
+          </button>
         </div>
-        <a
-          href="https://www.corteelectoral.gub.uy/"
-          target="_blank"
-          rel="noopener"
-          class="urgency-cta"
-        >
-          Ver locales de votación
-          <i class="ri-external-link-line" aria-hidden="true"></i>
-        </a>
-        <button
-          class="urgency-close"
-          id="urgency-close"
-          aria-label="Cerrar aviso"
-        >
-          <i class="ri-close-line" aria-hidden="true"></i>
-        </button>
       </div>
     </div>
 
