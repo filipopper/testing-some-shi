@@ -26,45 +26,77 @@ export class UrgencyBannerManager {
 
     if (!sorted.length) return;
 
-    document.addEventListener("keydown", this.boundKeydown);
+    document.addEventListener(
+      "keydown",
+      this.boundKeydown
+    );
 
-    sorted.forEach((bannerConfig) => this.mountBanner(bannerConfig));
+    sorted.forEach((bannerConfig) =>
+      this.mountBanner(bannerConfig)
+    );
   }
 
   mountBanner(bannerConfig) {
-    const el = document.querySelector(bannerConfig.selector);
+    const el = document.querySelector(
+      bannerConfig.selector
+    );
+
     if (!el) return;
 
-    const key = `${this.config.storageKey}-${bannerConfig.id}`;
+    const key =
+      `${this.config.storageKey}-${bannerConfig.id}`;
 
-    if (this.service.isDismissed(key, bannerConfig.dismissMode)) {
+    if (
+      this.service.isDismissed(
+        key,
+        bannerConfig.dismissMode
+      )
+    ) {
       el.style.display = "none";
       return;
     }
 
-    this.openBanners.set(bannerConfig.id, {
-      el,
-      key,
-      mode: bannerConfig.dismissMode,
-    });
+    this.openBanners.set(
+      bannerConfig.id,
+      {
+        el,
+        key,
+        mode: bannerConfig.dismissMode,
+      }
+    );
 
     const closeButton = document.querySelector(
       bannerConfig.closeSelector
     );
 
-    closeButton?.addEventListener("click", () => {
-      this.dismiss(el, key, bannerConfig.dismissMode);
-      this.openBanners.delete(bannerConfig.id);
-    });
+    closeButton?.addEventListener(
+      "click",
+      () => {
+        this.dismiss(
+          el,
+          key,
+          bannerConfig.dismissMode
+        );
+
+        this.openBanners.delete(
+          bannerConfig.id
+        );
+      }
+    );
 
     if (bannerConfig.countdown) {
-      this.startCountdown(el, bannerConfig.countdown);
+      this.startCountdown(
+        el,
+        bannerConfig.countdown
+      );
     }
   }
 
   dismiss(el, key, mode) {
     el.classList.add("dismissing");
-    el.style.maxHeight = `${el.scrollHeight}px`;
+
+    el.style.maxHeight =
+      `${el.scrollHeight}px`;
 
     requestAnimationFrame(() => {
       el.style.transition =
@@ -80,28 +112,38 @@ export class UrgencyBannerManager {
   }
 
   startCountdown(el, countdownConfig) {
-    const target = el.querySelector(countdownConfig.selector);
+    const target = el.querySelector(
+      countdownConfig.selector
+    );
 
     if (!target) return;
 
-    const endTime = new Date(countdownConfig.endsAt).getTime();
+    const endTime = new Date(
+      countdownConfig.endsAt
+    ).getTime();
 
     if (Number.isNaN(endTime)) {
       reportError(
         "urgency-banner.countdown",
         new Error("Invalid endsAt date"),
-        { endsAt: countdownConfig.endsAt }
+        {
+          endsAt:
+            countdownConfig.endsAt,
+        }
       );
 
       return;
     }
 
     const tick = () => {
-      const remaining = endTime - Date.now();
+      const remaining =
+        endTime - Date.now();
 
       if (remaining <= 0) {
         target.textContent =
-          countdownConfig.expiredText ?? "00:00:00";
+          countdownConfig.expiredText ??
+          "00:00:00";
+
         return;
       }
 
@@ -110,14 +152,19 @@ export class UrgencyBannerManager {
       ).padStart(2, "0");
 
       const m = String(
-        Math.floor((remaining % 36e5) / 6e4)
+        Math.floor(
+          (remaining % 36e5) / 6e4
+        )
       ).padStart(2, "0");
 
       const s = String(
-        Math.floor((remaining % 6e4) / 1000)
+        Math.floor(
+          (remaining % 6e4) / 1000
+        )
       ).padStart(2, "0");
 
-      target.textContent = `${h}:${m}:${s}`;
+      target.textContent =
+        `${h}:${m}:${s}`;
 
       requestAnimationFrame(tick);
     };
