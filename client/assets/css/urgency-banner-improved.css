@@ -1,0 +1,449 @@
+/* ══════════════════════════════════════════════════════════════
+   URGENCY BANNER v2.0 — Enhanced with Customization
+   Features: Custom colors, background photos, animations
+   Following UChicago institutional design patterns
+══════════════════════════════════════════════════════════════ */
+
+@keyframes banner-slide-down {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 
+      0 0 0 0 rgba(255, 255, 255, 0.4),
+      inset 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 0 8px rgba(255, 255, 255, 0),
+      inset 0 0 30px rgba(255, 255, 255, 0.2);
+  }
+}
+
+@keyframes icon-bounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* ── MAIN BANNER CONTAINER ───────────────────────────────────── */
+#urgency-banner {
+  /* Default background - can be overridden with data attributes */
+  background: var(--ub-bg, var(--c-dp, #62162f));
+  border-bottom: 2px solid var(--ub-border, var(--c-base, #96305a));
+  
+  /* Layout */
+  overflow: hidden;
+  max-height: 300px;
+  position: relative;
+  
+  /* Smooth transitions */
+  transition:
+    max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Entrance animation */
+  animation: banner-slide-down 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+  
+  /* Performance optimization */
+  will-change: max-height, opacity;
+  transform: translateZ(0);
+}
+
+/* Background photo overlay */
+#urgency-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--ub-photo, none);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.15;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Gradient overlay for photo backgrounds */
+#urgency-banner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+  opacity: var(--ub-photo-opacity, 0);
+  transition: opacity 0.3s ease;
+}
+
+#urgency-banner[data-has-photo="true"]::after {
+  opacity: 1;
+}
+
+/* Gradient animation variant */
+#urgency-banner[data-animation="gradient"] {
+  background: linear-gradient(
+    270deg,
+    var(--ub-gradient-1, #62162f),
+    var(--ub-gradient-2, #96305a),
+    var(--ub-gradient-3, #ba577e)
+  );
+  background-size: 200% 200%;
+  animation: 
+    banner-slide-down 0.5s cubic-bezier(0.4, 0, 0.2, 1) both,
+    gradient-shift 8s ease infinite;
+}
+
+/* Shimmer animation variant */
+#urgency-banner[data-animation="shimmer"]::before {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+  opacity: 1;
+}
+
+/* ── INNER CONTAINER ─────────────────────────────────────────── */
+.urgency-inner {
+  max-width: var(--max-w, 1200px);
+  margin: 0 auto;
+  padding: var(--sp-3, 0.75rem) var(--pad-x, clamp(1rem, 4vw, 3rem));
+  
+  /* Flexbox layout */
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4, 1rem);
+  flex-wrap: wrap;
+  
+  /* Ensure content is above overlays */
+  position: relative;
+  z-index: 2;
+}
+
+/* ── ICON ────────────────────────────────────────────────────── */
+.urgency-icon {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm, 4px);
+  
+  /* Flexbox centering */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Typography */
+  font-size: 1.125rem;
+  color: var(--ub-accent, var(--c-lt, #ca678e));
+  
+  /* Layout */
+  flex-shrink: 0;
+  
+  /* Animation */
+  animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  
+  /* Smooth transitions */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.urgency-icon:hover {
+  transform: scale(1.1);
+  animation: icon-bounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Icon variants */
+.urgency-icon[data-variant="success"] {
+  background: rgba(34, 142, 103, 0.2);
+  color: var(--e-lt, #4db891);
+}
+
+.urgency-icon[data-variant="warning"] {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+}
+
+.urgency-icon[data-variant="danger"] {
+  background: rgba(220, 53, 69, 0.2);
+  color: #dc3545;
+}
+
+.urgency-icon[data-variant="info"] {
+  background: rgba(13, 110, 253, 0.2);
+  color: #0d6efd;
+}
+
+/* ── CONTENT AREA ────────────────────────────────────────────── */
+.urgency-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3, 0.75rem);
+  flex-wrap: wrap;
+  min-width: 0; /* Allow text truncation */
+}
+
+.urgency-title {
+  font-size: var(--fs-xs, 0.6875rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--ub-strong, #fff);
+  white-space: nowrap;
+  text-transform: uppercase;
+  
+  /* Text shadow for better readability on photos */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.urgency-body {
+  font-size: var(--fs-sm, 0.8125rem);
+  color: var(--ub-text, rgba(255, 255, 255, 0.7));
+  line-height: 1.5;
+  
+  /* Text shadow for better readability on photos */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ── CALL TO ACTION BUTTON ───────────────────────────────────── */
+.urgency-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1, 0.25rem);
+  
+  /* Typography */
+  font-size: var(--fs-2xs, 0.5625rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ub-strong, #fff);
+  
+  /* Styling */
+  background: rgba(255, 255, 255, 0.12);
+  border: 0.5px solid rgba(255, 255, 255, 0.22);
+  padding: 0.375rem 0.875rem;
+  border-radius: var(--radius-xs, 2px);
+  text-decoration: none;
+  
+  /* Layout */
+  flex-shrink: 0;
+  
+  /* Transitions */
+  transition:
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.urgency-cta:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #fff;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.urgency-cta:focus {
+  outline: 2px solid var(--c-lt, #ca678e);
+  outline-offset: 2px;
+}
+
+.urgency-cta:active {
+  transform: translateY(0);
+}
+
+/* CTA variants */
+.urgency-cta[data-variant="primary"] {
+  background: var(--c-base, #96305a);
+  border-color: var(--c-base, #96305a);
+}
+
+.urgency-cta[data-variant="primary"]:hover {
+  background: var(--c-dp, #62162f);
+  border-color: var(--c-dp, #62162f);
+}
+
+.urgency-cta[data-variant="secondary"] {
+  background: var(--e-base, #228e67);
+  border-color: var(--e-base, #228e67);
+}
+
+.urgency-cta[data-variant="secondary"]:hover {
+  background: var(--e-dp, #145a40);
+  border-color: var(--e-dp, #145a40);
+}
+
+/* ── CLOSE BUTTON ────────────────────────────────────────────── */
+.urgency-close {
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 0.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-xs, 2px);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1rem;
+  
+  /* Flexbox centering */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Interaction */
+  cursor: pointer;
+  flex-shrink: 0;
+  
+  /* Transitions */
+  transition:
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.urgency-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+.urgency-close:focus {
+  outline: 2px solid var(--c-lt, #ca678e);
+  outline-offset: 2px;
+}
+
+.urgency-close:active {
+  transform: rotate(90deg) scale(0.9);
+}
+
+/* ── DISMISSING STATE ────────────────────────────────────────── */
+#urgency-banner.dismissing {
+  max-height: 0;
+  opacity: 0;
+  border-bottom-width: 0;
+  transform: translateY(-20px);
+}
+
+/* ── MOBILE RESPONSIVE ≤ 768px ───────────────────────────────── */
+@media (max-width: 768px) {
+  .urgency-inner {
+    flex-wrap: wrap;
+    gap: var(--sp-2, 0.5rem);
+    padding: var(--sp-3, 0.75rem) var(--sp-4, 1rem);
+  }
+  
+  .urgency-title {
+    font-size: var(--fs-2xs, 0.5625rem);
+  }
+  
+  .urgency-body {
+    font-size: var(--fs-xs, 0.6875rem);
+    width: 100%;
+  }
+  
+  .urgency-cta {
+    width: 100%;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+  }
+  
+  .urgency-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+  
+  .urgency-close {
+    width: 26px;
+    height: 26px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ── TABLET ≤ 1024px ─────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .urgency-content {
+    flex: 1 1 100%;
+  }
+}
+
+/* ── PRINT STYLES ────────────────────────────────────────────── */
+@media print {
+  #urgency-banner {
+    display: none !important;
+  }
+}
+
+/* ── REDUCED MOTION ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  #urgency-banner,
+  .urgency-icon,
+  .urgency-cta,
+  .urgency-close {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ── HIGH CONTRAST MODE ──────────────────────────────────────── */
+@media (prefers-contrast: high) {
+  #urgency-banner {
+    border-bottom-width: 3px;
+  }
+  
+  .urgency-icon {
+    border: 2px solid currentColor;
+  }
+  
+  .urgency-cta {
+    border-width: 2px;
+  }
+  
+  .urgency-close {
+    border-width: 2px;
+  }
+}
