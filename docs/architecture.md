@@ -6,9 +6,7 @@ La arquitectura está diseñada para **evitar entropía**: cada módulo tiene ow
 
 ## Capas y ownership
 
-- `client/app/main.js`: punto de entrada mínimo (composition root).
-- `client/app/core/app-shell.js`: orquestación de ciclo de render, navegación y composición MVC.
-- `client/app/core/router/hash-router.js`: router hash encapsulado (parse, normalize, navigate).
+- `client/app/main.js`: bootstrap SPA y composición general.
 - `client/app/router/*`: orquestación de navegación y wiring de controllers.
 - `client/app/state/*`: estado y acceso a datos transversales de la app.
 - `client/app/features/<feature>/*`: dominio funcional aislado (controller/view/services/config/data adapters locales).
@@ -59,30 +57,3 @@ No crear módulo para:
 - Script de boundaries: `scripts/check-architecture.mjs`.
 - Ejecutar: `node scripts/check-architecture.mjs`.
 - Falla si hay imports cruzados entre features o dependencias fuera de capa permitida.
-
-
-## Patrones aplicados (ligeros y prácticos)
-
-- **Composition Root** en `main.js` + `AppShell` para inyección/control de dependencias.
-- **Facade** en `AppShell` para coordinar router, estado y controllers sin acoplar vistas entre sí.
-- **Strategy-like routing** en `HashRouter` (parse + navegación encapsulada).
-- **Service abstraction** para storage en `shared/services/storage.js`.
-
-## Reglas de performance/runtime
-
-- Registrar listeners globales una sola vez desde infraestructura (`AppShell`).
-- Evitar trabajo de DOM redundante: routing controla transición y repaint en un solo flujo.
-- Mantener fetch/async dentro de modelos o servicios de feature, no en bootstrap global.
-
-
-## Runtime reliability conventions
-
-- Envolver operaciones async críticas con `safeAsync` y reportar con `reportError` (`client/app/core/runtime-errors.js`).
-- Evitar listeners duplicados: registrar listeners globales con `AbortController` desde `AppShell`.
-- Toda transición de ruta usa pipeline determinístico: `prepareTransition` -> `waitForScrollSettle` -> `resetTransition` -> `controller.init`.
-- Features deben validar datos/config antes de ejecutar flujos (ej. countdown con `endsAt` válido).
-
-## Debugging/observabilidad
-
-- Errores de capa llevan `scope` estable para rastreo (`router.*`, `controller.*`, `model.*`, `feature.*`).
-- Evitar `catch {}` silenciosos salvo degradación explícita de almacenamiento local.
