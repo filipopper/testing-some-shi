@@ -7,6 +7,8 @@ import { ProposalsController } from "./controllers/proposals-controller.js";
 import { JoinController      } from "./controllers/join-controller.js";
 import { PollController      } from "./controllers/poll-controller.js";
 import { Model } from "./models/model.js";
+import { urgencyBannerConfig } from "./config/urgency-banner-config.js";
+import { UrgencyBannerManager } from "./components/urgency-banner.js";
 
 const REGISTRY = {
   home:      HomeController,
@@ -24,8 +26,7 @@ let lastNormalizedHash = "";
 document.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("loaded");
 
-  // Show urgency banner if active
-  showUrgencyBanner();
+  new UrgencyBannerManager(urgencyBannerConfig).init();
 
   lastNormalizedHash = normalizeHash();
   loadFromHash();
@@ -127,28 +128,4 @@ function updateActiveNav() {
   document.querySelectorAll("#nav-links a[data-view]").forEach(a =>
     a.classList.toggle("active", a.getAttribute("data-view") === view)
   );
-}
-
-function showUrgencyBanner() {
-  const BANNER_KEY = "urgency-dismissed-oct2026";
-  const el = document.getElementById("urgency-banner");
-  if (!el) return;
-
-  // Hide if already dismissed this session
-  try {
-    if (sessionStorage.getItem(BANNER_KEY)) { el.style.display = "none"; return; }
-  } catch(_) {}
-
-  // Wire up close button with enhanced animation
-  document.getElementById("urgency-close")?.addEventListener("click", () => {
-    el.classList.add("dismissing");
-    el.style.maxHeight = el.scrollHeight + "px";
-    requestAnimationFrame(() => {
-      el.style.transition = "max-height 0.35s ease, opacity 0.35s ease, transform 0.35s ease";
-      el.style.maxHeight = "0";
-      el.style.opacity = "0";
-      setTimeout(() => el.remove(), 360);
-    });
-    try { sessionStorage.setItem(BANNER_KEY, "1"); } catch(_) {}
-  });
 }
