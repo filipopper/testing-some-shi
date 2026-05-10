@@ -1,4 +1,4 @@
-import { View } from "/core/view.js";
+import { View } from "../../foundation/view.js";
 
 const RAW_DATA = [
   [40.83, 35.58, 23.59],

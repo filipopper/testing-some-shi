@@ -51,7 +51,7 @@ for (const file of jsFiles) dfs(file);
 // Orphan module detection (exclude entrypoints/config-only leaves)
 const allowedOrphans = new Set([
   'client/app/main.js',
-  'client/app/router/view-registry.js',
+  'client/app/core/router/view-registry.js',
   'client/app/core/scripts/header.js',
   'client/app/core/scripts/menu.js',
   'client/app/core/scripts/screenshot.js',

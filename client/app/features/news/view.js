@@ -1,4 +1,4 @@
-import { View } from "/core/view.js";
+import { View } from "../../foundation/view.js";
 
 const TAG_COLORS = {
   actualidad: "tag-slate", // noticias recientes

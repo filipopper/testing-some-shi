@@ -1,6 +1,6 @@
 /**
  * GenealogyTree — Árbol genealógico extensible
- * Los datos se cargan desde client/features/genealogy/data/family.json
+ * Los datos se cargan desde client/app/features/genealogy/data/family.json
  * Filipovich™ · 2026
  */
 
@@ -147,7 +147,7 @@ export class GenealogyTree {
 
   /* ── CARGA DE DATOS ──────────────────────────────────── */
   _loadData() {
-    fetch('client/features/genealogy/data/family.json')
+    fetch('client/app/features/genealogy/data/family.json')
       .then(r => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
         return r.json();

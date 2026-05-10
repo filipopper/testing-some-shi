@@ -1,4 +1,4 @@
-import { escapeHTML } from "../client/js/escape-HTML.js";
+import { escapeHTML } from "../shared/utils/escape-html.js";
 
 export class Controller {
   constructor(model, view) {

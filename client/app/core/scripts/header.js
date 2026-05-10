@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Registrar Service Worker (PWA)
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/client/js/service-worker.js", { scope: "/" })
+    navigator.serviceWorker.register("/client/app/core/pwa/service-worker.js", { scope: "/" })
       .catch(() => {}); // silencioso en file://
   }
 
