@@ -8,5 +8,5 @@
 @import url("genealogy.css");
 @import url("about.css");
 @import url("store.css");
-@import url("poll.css");
+@import url("../../features/polls/styles/poll.css");
 @import url("mobile.css");

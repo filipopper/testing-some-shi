@@ -3,7 +3,7 @@ const PRECACHE = [
   "/",
   "/index.html",
   "/client/assets/css/all-styles.css",
-  "/client/js/app.js",
+  "/client/app/main.js",
   "/posts/index.json",
 ];
 
