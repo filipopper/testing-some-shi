@@ -57,7 +57,7 @@ client/assets/img/perfil-hero.png
 
 ### 3. Modifica el HTML
 
-Abre `client/js/views/home-view.js` y busca la sección hero:
+Abre `client/app/features/home/view.js` y busca la sección hero:
 
 #### ANTES (sin foto):
 ```html
@@ -118,7 +118,7 @@ Si usas foto, puedes quitar los badges para dar más espacio:
 
 ### Cambiar el color del glow:
 
-En `client/assets/css/layout.css`, busca `.hero-photo::before` y modifica:
+En `client/styles/global/layout.css`, busca `.hero-photo::before` y modifica:
 
 ```css
 .hero-photo::before {
