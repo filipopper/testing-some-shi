@@ -1,9 +1,9 @@
 # Urgency Banners
 
 ## Files
-- Config: `client/js/config/urgency-banner-config.js`
+- Config: `client/app/features/urgency-banner/config.js`
 - Component: `client/js/components/urgency-banner.js`
-- Persistence service: `client/js/services/urgency-banner-service.js`
+- Persistence service: `client/app/features/urgency-banner/service.js`
 
 ## Add a banner
 1. Add config object in `banners[]` with `id`, `selector`, `closeSelector`, `priority`, and `dismissMode`.
