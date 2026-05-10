@@ -1,4 +1,4 @@
-import { JoinView } from "../views/join-view.js";
+import { JoinView } from "./view.js";
 export class JoinController {
   constructor() { this.view = new JoinView(); }
   init() { this.view.render(); }

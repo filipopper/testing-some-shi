@@ -1,4 +1,4 @@
-import { UrgencyBannerService } from "../services/urgency-banner-service.js";
+import { UrgencyBannerService } from "./service.js";
 
 export class UrgencyBannerManager {
   constructor(config) {

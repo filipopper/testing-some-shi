@@ -1,5 +1,5 @@
-import { NewsView } from "../views/news-view.js";
-import { Model    } from "../models/model.js";
+import { NewsView } from "./view.js";
+import { Model    } from "../../state/model.js";
 
 export class NewsController {
   constructor(model) {

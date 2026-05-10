@@ -2,8 +2,8 @@ const CACHE = "filipovich-v1";
 const PRECACHE = [
   "/",
   "/index.html",
-  "/client/assets/css/all-styles.css",
-  "/client/js/app.js",
+  "/client/styles/index.css",
+  "/client/app/main.js",
   "/posts/index.json",
 ];
 

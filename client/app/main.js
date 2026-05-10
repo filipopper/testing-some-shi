@@ -1,7 +1,7 @@
-import { Model } from "./models/model.js";
-import { viewRegistry } from "./config/view-registry.js";
-import { urgencyBannerConfig } from "./config/urgency-banner-config.js";
-import { UrgencyBannerManager } from "./components/urgency-banner.js";
+import { Model } from "./state/model.js";
+import { viewRegistry } from "./router/view-registry.js";
+import { urgencyBannerConfig } from "./features/urgency-banner/config.js";
+import { UrgencyBannerManager } from "./features/urgency-banner/component.js";
 
 const REGISTRY = viewRegistry;
 

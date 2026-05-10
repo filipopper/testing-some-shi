@@ -1,4 +1,4 @@
-import { PollView } from "../views/poll-view.js";
+import { PollView } from "./view.js";
 
 export class PollController {
   constructor() { this.view = new PollView(); }

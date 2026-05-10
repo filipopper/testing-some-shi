@@ -1,7 +1,7 @@
 # Design System & CSS
 
 ## Current style entrypoint
-- `client/assets/css/all-styles.css` is the only stylesheet linked from HTML.
+- `client/styles/index.css` is the only stylesheet linked from HTML.
 - It imports reset, tokens/base, layout, and feature styles.
 
 ## Token usage

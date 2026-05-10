@@ -5,7 +5,7 @@
 Este proyecto incluye TODOS los archivos originales de tu proyecto más las siguientes mejoras:
 
 ### 1. Header Sticky Arreglado ✨
-**Archivo modificado**: `client/assets/css/header.css`
+**Archivo modificado**: `client/styles/global/header.css`
 
 **Cambios aplicados:**
 - ✅ Z-index aumentado de 400 a 1000
@@ -15,8 +15,8 @@ Este proyecto incluye TODOS los archivos originales de tu proyecto más las sigu
 
 ### 2. Urgency Banner Mejorado 🎨
 **Archivos modificados**: 
-- `client/assets/css/layout.css` - Estilos mejorados
-- `client/js/app.js` - Animación de cierre mejorada
+- `client/styles/global/layout.css` - Estilos mejorados
+- `client/app/main.js` - Animación de cierre mejorada
 
 **Nuevas características añadidas:**
 - ✅ Soporte para fotos de fondo
@@ -43,9 +43,9 @@ Este proyecto incluye TODOS los archivos originales de tu proyecto más las sigu
 ### Las mejoras ya están aplicadas ✅
 
 Los archivos principales ya están modificados con las mejoras básicas:
-- `client/assets/css/header.css` ✅
-- `client/assets/css/layout.css` ✅
-- `client/js/app.js` ✅
+- `client/styles/global/header.css` ✅
+- `client/styles/global/layout.css` ✅
+- `client/app/main.js` ✅
 
 **No necesitas hacer nada más**, las mejoras ya están funcionando.
 
