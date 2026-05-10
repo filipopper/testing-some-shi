@@ -87,14 +87,28 @@ export class AppShell {
 
     this.resetTransition(content);
 
-    const ControllerClass =
-      this.registry[viewId] ??
-      this.registry.home;
+    const fallbackView = this.registry.defaultView || 'home';
+
+    let resolved = null;
+
+    try {
+      resolved = await this.registry.resolve(viewId);
+    } catch (error) {
+      reportError('app-shell.resolveRoute', error, { viewId, fallbackView });
+      resolved = await this.registry.resolve(fallbackView);
+    }
+
+    const resolvedViewId = resolved?.resolvedViewId || fallbackView;
+    const ControllerClass = resolved?.ControllerClass;
+
+    if (typeof ControllerClass !== 'function') {
+      reportError('app-shell.renderRoute', new Error('Missing resolved controller class'), { viewId, resolvedViewId });
+      return;
+    }
 
     const model = this.modelFactory();
 
-    const controller =
-      new ControllerClass(model);
+    const controller = new ControllerClass(model);
 
     const init = assertFunction(
       controller?.init,
@@ -105,13 +119,13 @@ export class AppShell {
       reportError(
         'app-shell.renderRoute',
         new Error('Controller without init()'),
-        { viewId }
+        { viewId: resolvedViewId }
       );
 
       return;
     }
 
-    if (viewId === 'news' && postId) {
+    if (resolvedViewId === 'news' && postId) {
       const item = await safeAsync(
         'model.getNewsById',
         () => model.getNewsById(postId),
@@ -126,7 +140,7 @@ export class AppShell {
           'controller.init',
           () => init.call(controller),
           null,
-          { viewId }
+          { viewId: resolvedViewId }
         );
       }
     } else {
@@ -134,7 +148,7 @@ export class AppShell {
         'controller.init',
         () => init.call(controller),
         null,
-        { viewId }
+        { viewId: resolvedViewId }
       );
     }
 
@@ -144,7 +158,7 @@ export class AppShell {
       'app-shell.renderRoute',
       'Route rendered',
       {
-        viewId,
+        viewId: resolvedViewId,
         ms: Math.round(
           performance.now() - t0
         ),

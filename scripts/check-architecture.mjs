@@ -114,6 +114,19 @@ for (const file of jsFiles) {
   }
 }
 
+
+const staleRuntimePaths = [
+  ...walk(path.join(root, 'client')).filter((f) =>
+    /(\.js|\.mjs|\.html|\.css)$/.test(f)
+  ),
+].map((f) => ({ file: f, content: fs.readFileSync(f, 'utf8') }));
+
+for (const { file, content } of staleRuntimePaths) {
+  if (content.includes('client/app/core/features/')) {
+    errors.push(`${rel(file)} contains stale runtime feature root: client/app/core/features/`);
+  }
+}
+
 const legacyJsFiles = walk(
   path.join(root, 'client/js')
 ).map(rel);
