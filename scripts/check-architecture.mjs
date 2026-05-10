@@ -120,7 +120,7 @@ const legacyJsFiles = walk(
 
 for (const file of legacyJsFiles) {
   if (
-    file !== 'client/js/service-worker.js'
+    file !== 'client/app/core/pwa/service-worker.js'
   ) {
     errors.push(
       `legacy file must be moved into app layers: ${file}`

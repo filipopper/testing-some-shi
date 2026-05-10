@@ -1,5 +1,5 @@
 import { Model } from '../state/model.js';
-import { viewRegistry } from '../router/view-registry.js';
+import { viewRegistry } from './router/view-registry.js';
 import { urgencyBannerConfig } from '../features/urgency-banner/config.js';
 import { UrgencyBannerManager } from '../features/urgency-banner/component.js';
 import { HashRouter } from './router/hash-router.js';
