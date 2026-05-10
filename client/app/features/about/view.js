@@ -269,7 +269,7 @@ export class AboutView {
   _initGenealogy() {
     const mount = this.content.querySelector("#wiki-genealogy-mount");
     if (!mount) return;
-    import("../genealogy-tree.js")
+    import("../genealogy/tree.js")
       .then(({ GenealogyTree }) => {
         this._genealogyTree = new GenealogyTree(mount);
       })
