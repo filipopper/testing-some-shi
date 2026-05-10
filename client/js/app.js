@@ -5,7 +5,6 @@ import { UrgencyBannerManager } from "./components/urgency-banner.js";
 
 const REGISTRY = viewRegistry;
 
-
 let lastNormalizedHash = "";
 
 document.addEventListener("DOMContentLoaded", () => {
