@@ -9,7 +9,12 @@ export class ResearchController {
 
   async init() {
     await this.repository.load();
-    this.view.selectedId = this.repository.selectedInitialId;
+
+    this.view.selectedId =
+      this.repository.selectedInitialId ||
+      this.repository.getSnapshot?.().entities?.[0]?.id ||
+      null;
+
     this.view.render();
     this.view.bindInteractions();
   }
