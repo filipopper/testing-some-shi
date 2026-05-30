@@ -190,42 +190,14 @@ export class ProposalsView {
 
   _bindAccordion() {
     document.querySelectorAll(".proposal-accordion-btn").forEach(btn => {
-      const card = btn.closest(".proposal-card");
-      const body = card?.querySelector(".proposal-card-body");
-
-      if (!card || !body) return;
-
-      body.style.maxHeight = "0px";
-
       btn.addEventListener("click", () => {
-        const isOpen = card.classList.contains("open");
-
-        btn.setAttribute("aria-expanded", String(!isOpen));
+        const card   = btn.closest(".proposal-card");
+        const body   = card.querySelector(".proposal-card-body");
+        const isOpen = !body.hidden;
+        body.hidden = isOpen;
+        btn.setAttribute("aria-expanded", !isOpen);
         btn.querySelector("i").className = isOpen ? "ri-add-line" : "ri-subtract-line";
         card.classList.toggle("open", !isOpen);
-
-        if (isOpen) {
-          body.style.maxHeight = `${body.scrollHeight}px`;
-
-          requestAnimationFrame(() => {
-            body.style.maxHeight = "0px";
-          });
-
-          body.addEventListener("transitionend", () => {
-            if (!card.classList.contains("open")) {
-              body.hidden = true;
-            }
-          }, { once: true });
-
-          return;
-        }
-
-        body.hidden = false;
-        body.style.maxHeight = "0px";
-
-        requestAnimationFrame(() => {
-          body.style.maxHeight = `${body.scrollHeight}px`;
-        });
       });
     });
   }
