@@ -1,0 +1,923 @@
+{
+  "entityTypes": {
+    "research": "Investigación",
+    "methodology": "Metodología",
+    "observation": "Observación",
+    "dataset": "Dataset",
+    "cohort": "Cohorte",
+    "teacher": "Docente / investigador",
+    "intelligence": "Inteligencia múltiple",
+    "skill": "Habilidad cognitiva",
+    "hypothesis": "Hipótesis",
+    "law": "Normativa",
+    "service": "Servicio de apoyo",
+    "bibliography": "Bibliografía",
+    "framework": "Marco conceptual"
+  },
+  "entities": [
+    {
+      "id": "r-inclusive-transfer",
+      "type": "research",
+      "title": "Transferencia de apoyos inclusivos a secuencias de lectura inferencial",
+      "subtitle": "Estudio longitudinal sobre ajustes razonables, autonomía lectora y participación sostenida.",
+      "status": "Revisión metodológica",
+      "updated": "2026-05-18",
+      "owner": "Equipo de Inclusión y Lenguaje",
+      "tags": [
+        "inclusión",
+        "lectura inferencial",
+        "ajustes razonables",
+        "participación",
+        "metacognición"
+      ],
+      "section": "Papers",
+      "summary": "Analiza cómo los apoyos explícitos, la anticipación de barreras y las pausas metacognitivas modifican la participación de estudiantes con necesidades de acceso diversas en tareas de lectura profunda.",
+      "hypothesis": "Cuando los ajustes razonables se diseñan desde la planificación y no como reacción, aumenta la participación sostenida y mejora la transferencia de estrategias inferenciales.",
+      "methodology": "Observación mixta · 3 cohortes · rúbrica de participación · entrevistas breves · revisión quincenal por pares internos.",
+      "evidence": [
+        "42 observaciones codificadas",
+        "18 producciones estudiantiles anotadas",
+        "6 entrevistas familiares",
+        "3 reuniones de equipo interdisciplinario"
+      ],
+      "versions": [
+        [
+          "v0.1",
+          "2026-03-04",
+          "Pregunta inicial y matriz de observación"
+        ],
+        [
+          "v0.2",
+          "2026-04-10",
+          "Incorpora normativa y bibliografía de inclusión"
+        ],
+        [
+          "v0.3",
+          "2026-05-18",
+          "Ajusta indicadores de participación y autonomía"
+        ]
+      ],
+      "citations": [
+        "law-18651",
+        "law-salamanca",
+        "book-index-inclusion",
+        "method-universal-design",
+        "dataset-inclusive-reading"
+      ]
+    },
+    {
+      "id": "r-metacognitive-pauses",
+      "type": "research",
+      "title": "Micro-pausas metacognitivas y persistencia en tareas abiertas",
+      "subtitle": "Paper vivo sobre continuidad atencional, verbalización de estrategia y feedback docente.",
+      "status": "Replicación activa",
+      "updated": "2026-05-07",
+      "owner": "Laboratorio de Aprendizaje Profundo",
+      "tags": [
+        "metacognición",
+        "autonomía",
+        "feedback",
+        "persistencia",
+        "planificación"
+      ],
+      "section": "Papers",
+      "summary": "Documenta la evolución de una intervención breve de verbalización estratégica antes de resolver tareas abiertas en matemática y ciencias.",
+      "hypothesis": "Una pausa de 90 segundos para nombrar estrategia aumenta la persistencia sin elevar carga afectiva percibida.",
+      "methodology": "Diseño A/B pedagógico · 4 cohortes · diario docente · rúbrica de autonomía · revisión semanal.",
+      "evidence": [
+        "64 registros de aula",
+        "4 secuencias didácticas versionadas",
+        "12 notas docentes",
+        "2 réplicas parciales"
+      ],
+      "versions": [
+        [
+          "v1.0",
+          "2026-02-16",
+          "Protocolo inicial"
+        ],
+        [
+          "v1.1",
+          "2026-03-22",
+          "Agrega feedback diferido"
+        ],
+        [
+          "v1.2",
+          "2026-05-07",
+          "Cruce con persistencia y autonomía"
+        ]
+      ],
+      "citations": [
+        "method-metacognitive-pause",
+        "dataset-c24-autonomy",
+        "skill-self-regulation",
+        "teacher-silva"
+      ]
+    },
+    {
+      "id": "method-universal-design",
+      "type": "methodology",
+      "title": "Diseño Universal para el Aprendizaje como protocolo institucional",
+      "subtitle": "Marco operativo para anticipar barreras y documentar apoyos antes de la clase.",
+      "status": "Estándar interno",
+      "updated": "2026-04-28",
+      "owner": "Coordinación pedagógica",
+      "tags": [
+        "dua",
+        "accesibilidad",
+        "ajustes razonables",
+        "planificación",
+        "participación"
+      ],
+      "section": "Methodologies",
+      "summary": "Convierte principios de accesibilidad en decisiones de planificación, evidencias verificables y criterios de revisión docente.",
+      "citations": [
+        "law-crpd",
+        "law-salamanca",
+        "guide-teleton-accessibility",
+        "r-inclusive-transfer"
+      ]
+    },
+    {
+      "id": "method-metacognitive-pause",
+      "type": "methodology",
+      "title": "Pausa metacognitiva de 90 segundos",
+      "subtitle": "Microprotocolo para explicitar estrategia, dificultad anticipada y siguiente acción observable.",
+      "status": "En validación",
+      "updated": "2026-05-09",
+      "owner": "Laboratorio de Aprendizaje Profundo",
+      "tags": [
+        "metacognición",
+        "autonomía",
+        "feedback",
+        "persistencia"
+      ],
+      "section": "Methodologies",
+      "summary": "Plantilla breve para orientar la continuidad cognitiva en tareas abiertas y registrar evidencia comparable.",
+      "citations": [
+        "r-metacognitive-pauses",
+        "dataset-c24-autonomy",
+        "skill-self-regulation"
+      ]
+    },
+    {
+      "id": "obs-reading-042",
+      "type": "observation",
+      "title": "Observación 042 · barreras de consigna en lectura inferencial",
+      "subtitle": "Registro cualitativo con evidencia de accesibilidad cognitiva y participación.",
+      "status": "Codificada",
+      "updated": "2026-05-20",
+      "owner": "Aula 3 · Lenguaje",
+      "tags": [
+        "observación",
+        "lectura inferencial",
+        "accesibilidad cognitiva",
+        "participación"
+      ],
+      "section": "Observations",
+      "summary": "La reformulación visual de consignas redujo solicitudes de aclaración y aumentó turnos de participación entre pares.",
+      "citations": [
+        "r-inclusive-transfer",
+        "method-universal-design",
+        "dataset-inclusive-reading"
+      ]
+    },
+    {
+      "id": "dataset-inclusive-reading",
+      "type": "dataset",
+      "title": "Dataset IR-24 · lectura, apoyos y participación",
+      "subtitle": "Repositorio estructurado de observaciones, adaptaciones y evidencias de aula.",
+      "status": "Abierto internamente",
+      "updated": "2026-05-21",
+      "owner": "Archivo institucional",
+      "tags": [
+        "dataset",
+        "inclusión",
+        "lectura inferencial",
+        "participación",
+        "cohorte 2024"
+      ],
+      "section": "Datasets",
+      "summary": "Conjunto curado para rastrear relaciones entre apoyos planificados, barreras observadas y resultados pedagógicos.",
+      "citations": [
+        "r-inclusive-transfer",
+        "obs-reading-042",
+        "cohort-2024-a"
+      ]
+    },
+    {
+      "id": "dataset-c24-autonomy",
+      "type": "dataset",
+      "title": "Dataset C-24 · autonomía y persistencia",
+      "subtitle": "Evidencias longitudinales de resolución abierta, feedback docente y autorregulación.",
+      "status": "Curaduría activa",
+      "updated": "2026-05-12",
+      "owner": "Archivo institucional",
+      "tags": [
+        "dataset",
+        "autonomía",
+        "persistencia",
+        "feedback",
+        "cohorte 2024"
+      ],
+      "section": "Datasets",
+      "summary": "Matriz institucional para comparar señales de autonomía y continuidad de tarea entre secuencias didácticas.",
+      "citations": [
+        "r-metacognitive-pauses",
+        "method-metacognitive-pause",
+        "cohort-2024-a"
+      ]
+    },
+    {
+      "id": "cohort-2024-a",
+      "type": "cohort",
+      "title": "Cohorte 2024-A · ciclo básico",
+      "subtitle": "Grupo longitudinal vinculado a lectura inferencial, autonomía y apoyos inclusivos.",
+      "status": "Seguimiento longitudinal",
+      "updated": "2026-05-16",
+      "owner": "Coordinación académica",
+      "tags": [
+        "cohorte 2024",
+        "lectura inferencial",
+        "autonomía",
+        "participación"
+      ],
+      "section": "Longitudinal Analysis",
+      "summary": "Unidad de análisis institucional que permite conectar metodologías, observaciones y resultados a través del tiempo.",
+      "citations": [
+        "dataset-inclusive-reading",
+        "dataset-c24-autonomy",
+        "teacher-silva"
+      ]
+    },
+    {
+      "id": "teacher-silva",
+      "type": "teacher",
+      "title": "Prof. Mariana Silva · investigación de aula",
+      "subtitle": "Docente investigadora vinculada a feedback, lectura y diseño de evidencias.",
+      "status": "Investigadora interna",
+      "updated": "2026-05-02",
+      "owner": "Departamento académico",
+      "tags": [
+        "docente investigador",
+        "feedback",
+        "lectura inferencial",
+        "metacognición"
+      ],
+      "section": "Researchers",
+      "summary": "Nodo institucional para rastrear aportes docentes, observaciones producidas y metodologías replicadas.",
+      "citations": [
+        "r-metacognitive-pauses",
+        "cohort-2024-a",
+        "obs-reading-042"
+      ]
+    },
+    {
+      "id": "skill-self-regulation",
+      "type": "skill",
+      "title": "Autorregulación y monitoreo de estrategia",
+      "subtitle": "Habilidad cognitiva transversal conectada con metacognición, feedback y autonomía.",
+      "status": "Mapa cognitivo",
+      "updated": "2026-04-18",
+      "owner": "Cognitive Maps",
+      "tags": [
+        "habilidad cognitiva",
+        "autorregulación",
+        "metacognición",
+        "autonomía"
+      ],
+      "section": "Cognitive Maps",
+      "summary": "Habilidad usada como conector para navegar papers, metodologías y evidencia longitudinal.",
+      "citations": [
+        "r-metacognitive-pauses",
+        "method-metacognitive-pause",
+        "dataset-c24-autonomy"
+      ]
+    },
+    {
+      "id": "int-interpersonal",
+      "type": "intelligence",
+      "title": "Inteligencia interpersonal y participación",
+      "subtitle": "Categoría de navegación para interacciones, apoyo entre pares y prácticas inclusivas.",
+      "status": "Mapa institucional",
+      "updated": "2026-04-02",
+      "owner": "Cognitive Maps",
+      "tags": [
+        "inteligencias múltiples",
+        "participación",
+        "colaboración",
+        "inclusión"
+      ],
+      "section": "Cognitive Maps",
+      "summary": "Permite seguir relaciones entre participación social, apoyos, observaciones y resultados pedagógicos.",
+      "citations": [
+        "r-inclusive-transfer",
+        "obs-reading-042",
+        "method-universal-design"
+      ]
+    },
+    {
+      "id": "law-constitution",
+      "type": "law",
+      "title": "Constitución Nacional · derecho a la educación",
+      "subtitle": "Entidad normativa para conectar derechos, prácticas pedagógicas e inclusión.",
+      "status": "Normativa nacional",
+      "updated": "2026-03-14",
+      "owner": "Legal Frameworks",
+      "tags": [
+        "normativa nacional",
+        "derechos humanos",
+        "educación",
+        "accesibilidad"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Base jurídica para interpretar obligaciones institucionales vinculadas al acceso, permanencia y participación educativa.",
+      "articles": [
+        "Derecho a la educación",
+        "Igualdad ante la ley",
+        "Protección de derechos fundamentales"
+      ],
+      "citations": [
+        "law-18651",
+        "law-crpd",
+        "method-universal-design"
+      ],
+      "official": "https://www.impo.com.uy/"
+    },
+    {
+      "id": "law-18651",
+      "type": "law",
+      "title": "Ley 18.651 · Protección Integral de Personas con Discapacidad",
+      "subtitle": "Marco nacional para accesibilidad, apoyos, participación y derechos.",
+      "status": "Normativa nacional",
+      "updated": "2026-03-14",
+      "owner": "Legal Frameworks",
+      "tags": [
+        "ley 18.651",
+        "discapacidad",
+        "accesibilidad",
+        "derechos humanos",
+        "ajustes razonables"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Ordena responsabilidades públicas e institucionales sobre inclusión, accesibilidad y equiparación de oportunidades.",
+      "articles": [
+        "Accesibilidad",
+        "Educación inclusiva",
+        "Prestaciones y apoyos",
+        "Participación social"
+      ],
+      "citations": [
+        "r-inclusive-transfer",
+        "service-personal-assistant",
+        "service-disability-registry",
+        "law-crpd"
+      ],
+      "official": "https://www.impo.com.uy/"
+    },
+    {
+      "id": "law-general-education",
+      "type": "law",
+      "title": "Ley General de Educación",
+      "subtitle": "Marco pedagógico nacional para derecho a la educación, inclusión y trayectorias.",
+      "status": "Normativa nacional",
+      "updated": "2026-03-14",
+      "owner": "Legal Frameworks",
+      "tags": [
+        "normativa nacional",
+        "educación",
+        "trayectorias",
+        "inclusión"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Conecta principios educativos con planificación institucional, participación y continuidad de trayectorias.",
+      "articles": [
+        "Derecho a la educación",
+        "Diversidad educativa",
+        "Continuidad de trayectorias"
+      ],
+      "citations": [
+        "law-18651",
+        "method-universal-design",
+        "r-inclusive-transfer"
+      ],
+      "official": "https://www.impo.com.uy/"
+    },
+    {
+      "id": "law-decree-350-22",
+      "type": "law",
+      "title": "Decreto 350/22 · apoyos y prestaciones",
+      "subtitle": "Referencia normativa para orientar solicitudes, documentación y accesos estatales.",
+      "status": "Normativa nacional",
+      "updated": "2026-03-14",
+      "owner": "Legal Frameworks",
+      "tags": [
+        "decreto 350/22",
+        "prestaciones estatales",
+        "apoyos",
+        "discapacidad"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Entidad de consulta para vincular prestaciones, documentación requerida y acompañamiento institucional.",
+      "articles": [
+        "Apoyos",
+        "Procedimientos",
+        "Organismos responsables"
+      ],
+      "citations": [
+        "service-ayex",
+        "service-personal-assistant",
+        "service-disability-registry"
+      ],
+      "official": "https://www.impo.com.uy/"
+    },
+    {
+      "id": "law-salamanca",
+      "type": "law",
+      "title": "Declaración de Salamanca",
+      "subtitle": "Marco internacional sobre escuelas inclusivas, barreras y participación.",
+      "status": "Normativa internacional",
+      "updated": "2026-03-16",
+      "owner": "Legal Frameworks",
+      "tags": [
+        "normativa internacional",
+        "inclusión",
+        "participación",
+        "barreras"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Orienta la lectura institucional de inclusión como transformación de entornos, prácticas y culturas escolares.",
+      "articles": [
+        "Escuelas para todos",
+        "Necesidades educativas especiales",
+        "Participación comunitaria"
+      ],
+      "citations": [
+        "r-inclusive-transfer",
+        "book-index-inclusion",
+        "method-universal-design"
+      ],
+      "official": "https://unesdoc.unesco.org/"
+    },
+    {
+      "id": "law-incheon",
+      "type": "law",
+      "title": "Declaración de Incheon · Educación 2030",
+      "subtitle": "Referencia internacional para educación inclusiva, equitativa y de calidad.",
+      "status": "Normativa internacional",
+      "updated": "2026-03-16",
+      "owner": "Legal Frameworks",
+      "tags": [
+        "normativa internacional",
+        "educación 2030",
+        "equidad",
+        "calidad"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Conecta metas de equidad y calidad educativa con indicadores institucionales de participación y acceso.",
+      "articles": [
+        "Equidad",
+        "Calidad educativa",
+        "Aprendizaje a lo largo de la vida"
+      ],
+      "citations": [
+        "law-crpd",
+        "r-inclusive-transfer",
+        "framework-human-rights"
+      ],
+      "official": "https://unesdoc.unesco.org/"
+    },
+    {
+      "id": "law-crpd",
+      "type": "law",
+      "title": "Convención sobre los Derechos de las Personas con Discapacidad",
+      "subtitle": "Marco de derechos humanos para accesibilidad, ajustes razonables y participación plena.",
+      "status": "Normativa internacional",
+      "updated": "2026-03-16",
+      "owner": "Legal Frameworks",
+      "tags": [
+        "derechos humanos",
+        "discapacidad",
+        "ajustes razonables",
+        "accesibilidad"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Permite conectar obligaciones legales, prácticas pedagógicas y decisiones de accesibilidad documentadas.",
+      "articles": [
+        "Educación inclusiva",
+        "Accesibilidad",
+        "Igual reconocimiento",
+        "Participación"
+      ],
+      "citations": [
+        "law-18651",
+        "method-universal-design",
+        "framework-human-rights"
+      ],
+      "official": "https://www.ohchr.org/"
+    },
+    {
+      "id": "service-ayex",
+      "type": "service",
+      "title": "AYEX · ayudas extraordinarias",
+      "subtitle": "Orientación institucional para familias sobre apoyos y documentación.",
+      "status": "Servicio de apoyo",
+      "updated": "2026-04-06",
+      "owner": "Servicios de Apoyo",
+      "tags": [
+        "ayex",
+        "prestaciones estatales",
+        "apoyos",
+        "familias",
+        "accesos rápidos"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Ficha de orientación para entender propósito, elegibilidad, requisitos y derivaciones oficiales.",
+      "purpose": "Apoyar situaciones que requieren recursos o prestaciones extraordinarias vinculadas a discapacidad o necesidades de apoyo.",
+      "responsible": "Organismo estatal competente según prestación y territorio.",
+      "eligibility": "Familias o personas que acrediten situación, documentación y criterios definidos por el organismo responsable.",
+      "requirements": [
+        "Documentación personal",
+        "Informes técnicos",
+        "Constancias educativas o de salud",
+        "Formulario del organismo"
+      ],
+      "citations": [
+        "law-decree-350-22",
+        "law-18651",
+        "service-disability-registry"
+      ],
+      "official": "https://www.gub.uy/"
+    },
+    {
+      "id": "service-personal-assistant",
+      "type": "service",
+      "title": "Asistente Personal",
+      "subtitle": "Prestación de apoyo para autonomía, participación y vida cotidiana.",
+      "status": "Servicio de apoyo",
+      "updated": "2026-04-06",
+      "owner": "Servicios de Apoyo",
+      "tags": [
+        "asistente personal",
+        "autonomía",
+        "prestaciones estatales",
+        "discapacidad"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Entidad navegable para orientar requisitos, documentación relacionada y conexiones pedagógicas con autonomía.",
+      "purpose": "Favorecer autonomía y participación mediante apoyo personal en actividades definidas por la normativa vigente.",
+      "responsible": "Sistema Nacional de Cuidados u organismo público correspondiente.",
+      "eligibility": "Personas que cumplen criterios de dependencia, discapacidad y evaluación definidos oficialmente.",
+      "requirements": [
+        "Documento de identidad",
+        "Registro o certificación de discapacidad",
+        "Evaluación de dependencia",
+        "Solicitud formal"
+      ],
+      "citations": [
+        "law-18651",
+        "law-decree-350-22",
+        "skill-self-regulation"
+      ],
+      "official": "https://www.gub.uy/"
+    },
+    {
+      "id": "service-disability-pension",
+      "type": "service",
+      "title": "Pensión por Invalidez",
+      "subtitle": "Ficha de orientación para acceso, requisitos y documentación institucional asociada.",
+      "status": "Servicio de apoyo",
+      "updated": "2026-04-06",
+      "owner": "Servicios de Apoyo",
+      "tags": [
+        "pensión por invalidez",
+        "prestaciones estatales",
+        "discapacidad",
+        "familias"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Organiza información útil para acompañar consultas familiares sin reemplazar la orientación oficial.",
+      "purpose": "Prestación económica orientada a situaciones de invalidez conforme a criterios estatales.",
+      "responsible": "Banco de Previsión Social u organismo competente.",
+      "eligibility": "Personas que cumplan criterios médicos, administrativos y socioeconómicos establecidos oficialmente.",
+      "requirements": [
+        "Documento de identidad",
+        "Historia clínica o informes",
+        "Evaluación médica",
+        "Declaraciones requeridas"
+      ],
+      "citations": [
+        "law-18651",
+        "service-disability-registry"
+      ],
+      "official": "https://www.bps.gub.uy/"
+    },
+    {
+      "id": "service-cenatt",
+      "type": "service",
+      "title": "CENATT · orientación y apoyo técnico",
+      "subtitle": "Nodo institucional para derivaciones, recursos técnicos y acompañamiento.",
+      "status": "Servicio de apoyo",
+      "updated": "2026-04-06",
+      "owner": "Servicios de Apoyo",
+      "tags": [
+        "cenatt",
+        "apoyos",
+        "orientación",
+        "accesibilidad"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Ficha para centralizar documentación, accesos rápidos y relaciones con recursos educativos.",
+      "purpose": "Brindar orientación técnica o derivación según el servicio disponible y el caso.",
+      "responsible": "Organismo responsable según programa vigente.",
+      "eligibility": "Personas, familias o instituciones que requieren orientación técnica sobre apoyos.",
+      "requirements": [
+        "Consulta inicial",
+        "Documentación del caso",
+        "Informes disponibles"
+      ],
+      "citations": [
+        "guide-teleton-accessibility",
+        "service-ayex",
+        "law-18651"
+      ],
+      "official": "https://www.gub.uy/"
+    },
+    {
+      "id": "service-family-allowance",
+      "type": "service",
+      "title": "Asignación Familiar",
+      "subtitle": "Recurso de orientación para prestaciones, trayectorias y documentación familiar.",
+      "status": "Servicio de apoyo",
+      "updated": "2026-04-06",
+      "owner": "Servicios de Apoyo",
+      "tags": [
+        "asignación familiar",
+        "familias",
+        "prestaciones estatales",
+        "trayectorias"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Organiza información de consulta para orientar a familias hacia canales oficiales.",
+      "purpose": "Apoyo económico familiar según condiciones definidas por la política pública vigente.",
+      "responsible": "Banco de Previsión Social u organismo competente.",
+      "eligibility": "Familias con niñas, niños o adolescentes que cumplan requisitos establecidos.",
+      "requirements": [
+        "Documento de identidad",
+        "Constancias educativas",
+        "Declaraciones solicitadas",
+        "Datos del núcleo familiar"
+      ],
+      "citations": [
+        "law-general-education",
+        "service-disability-pension"
+      ],
+      "official": "https://www.bps.gub.uy/"
+    },
+    {
+      "id": "service-disability-registry",
+      "type": "service",
+      "title": "Registro Nacional de Personas con Discapacidad",
+      "subtitle": "Entidad clave para documentación, certificación y acceso a prestaciones.",
+      "status": "Servicio de apoyo",
+      "updated": "2026-04-06",
+      "owner": "Servicios de Apoyo",
+      "tags": [
+        "registro discapacidad",
+        "documentación",
+        "prestaciones estatales",
+        "accesibilidad"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Punto de conexión entre normativa, servicios, documentación familiar y accesos oficiales.",
+      "purpose": "Registrar y acreditar información vinculada a discapacidad según criterios públicos.",
+      "responsible": "Organismo público competente.",
+      "eligibility": "Personas con documentación e informes requeridos para evaluación o registro.",
+      "requirements": [
+        "Documento de identidad",
+        "Informes técnicos",
+        "Certificados médicos",
+        "Solicitud oficial"
+      ],
+      "citations": [
+        "law-18651",
+        "service-ayex",
+        "service-personal-assistant"
+      ],
+      "official": "https://www.gub.uy/"
+    },
+    {
+      "id": "book-index-inclusion",
+      "type": "bibliography",
+      "title": "Booth & Ainscow · Index for Inclusion",
+      "subtitle": "Material bibliográfico para culturas, políticas y prácticas inclusivas.",
+      "status": "Bibliografía anotada",
+      "updated": "2026-04-22",
+      "owner": "Bibliographic Materials",
+      "tags": [
+        "booth ainscow",
+        "bibliografía",
+        "inclusión",
+        "culturas inclusivas",
+        "prácticas pedagógicas"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Recurso editorial anotado para conectar reflexión institucional con observaciones y metodología inclusiva.",
+      "authors": "Tony Booth, Mel Ainscow",
+      "isbn": "Material en ediciones y traducciones múltiples",
+      "markdown": "### Nota editorial\nEl material funciona como una herramienta para revisar **culturas**, **políticas** y **prácticas**. En este repositorio se usa para formular preguntas de observación y criterios de revisión institucional.\n\n- ¿Qué barreras aparecen antes de la clase?\n- ¿Qué apoyos se documentan?\n- ¿Cómo se evidencia la participación?",
+      "citations": [
+        "law-salamanca",
+        "method-universal-design",
+        "r-inclusive-transfer"
+      ]
+    },
+    {
+      "id": "guide-eurosocial",
+      "type": "bibliography",
+      "title": "EUROsociAL+ · guías de inclusión y cohesión social",
+      "subtitle": "Material académico aplicado a políticas, accesibilidad y derechos.",
+      "status": "Bibliografía anotada",
+      "updated": "2026-04-22",
+      "owner": "Bibliographic Materials",
+      "tags": [
+        "eurosocial",
+        "bibliografía",
+        "derechos humanos",
+        "políticas públicas",
+        "inclusión"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Puente entre marcos de política pública y decisiones escolares documentables.",
+      "authors": "EUROsociAL+",
+      "isbn": "Publicaciones institucionales",
+      "markdown": "### Uso institucional\nSe consulta para contrastar prácticas escolares con marcos de cohesión social, accesibilidad y políticas públicas. Las notas se conectan con normativa y servicios de apoyo.",
+      "citations": [
+        "framework-human-rights",
+        "law-incheon",
+        "service-ayex"
+      ]
+    },
+    {
+      "id": "guide-teleton-accessibility",
+      "type": "bibliography",
+      "title": "Teletón Uruguay · materiales de accesibilidad",
+      "subtitle": "Guías prácticas para apoyos, accesibilidad y orientación familiar.",
+      "status": "Recurso educativo",
+      "updated": "2026-04-22",
+      "owner": "Bibliographic Materials",
+      "tags": [
+        "teletón uruguay",
+        "accesibilidad",
+        "recursos educativos",
+        "familias",
+        "apoyos"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Material de consulta para traducir necesidades de acceso a decisiones pedagógicas y derivaciones claras.",
+      "authors": "Teletón Uruguay",
+      "isbn": "Material institucional",
+      "markdown": "### Criterios de lectura\nEste recurso se indexa por barrera, apoyo, edad, accesibilidad física, comunicación y participación. Cada nota debe vincularse con una práctica pedagógica observable.",
+      "citations": [
+        "method-universal-design",
+        "service-cenatt",
+        "law-18651"
+      ]
+    },
+    {
+      "id": "framework-human-rights",
+      "type": "framework",
+      "title": "Derechos Humanos, inclusión y participación educativa",
+      "subtitle": "Marco conceptual que conecta legislación, prácticas y trazabilidad pedagógica.",
+      "status": "Marco conceptual",
+      "updated": "2026-03-30",
+      "owner": "Institutional Intelligence",
+      "tags": [
+        "derechos humanos",
+        "participación",
+        "inclusión",
+        "accesibilidad",
+        "normativa internacional"
+      ],
+      "section": "Inclusive Education",
+      "summary": "Capa conceptual para navegar entre normativas, servicios, bibliografía e investigaciones institucionales.",
+      "citations": [
+        "law-crpd",
+        "law-incheon",
+        "guide-eurosocial",
+        "r-inclusive-transfer"
+      ]
+    }
+  ],
+  "hubSections": [
+    [
+      "Papers",
+      "Investigaciones vivas, hipótesis y evidencia revisable."
+    ],
+    [
+      "Research",
+      "Preguntas, hallazgos, líneas activas y peer review interno."
+    ],
+    [
+      "Observations",
+      "Registros de aula, codificación y trazabilidad pedagógica."
+    ],
+    [
+      "Methodologies",
+      "Protocolos versionados y decisiones didácticas replicables."
+    ],
+    [
+      "Planning Systems",
+      "Secuencias, criterios docentes y diseño de evidencias."
+    ],
+    [
+      "Institutional Intelligence",
+      "Síntesis, patrones y memoria operativa institucional."
+    ],
+    [
+      "Inclusive Education",
+      "Normativa, servicios, bibliografía y prácticas inclusivas conectadas."
+    ],
+    [
+      "Bibliographic Materials",
+      "Lectura anotada, citas internas y relaciones temáticas."
+    ],
+    [
+      "Legal Frameworks",
+      "Normas navegables conectadas a prácticas pedagógicas."
+    ],
+    [
+      "Datasets",
+      "Conjuntos de evidencia, cohortes y observaciones relacionadas."
+    ],
+    [
+      "Cognitive Maps",
+      "Habilidades, inteligencias múltiples y relaciones de aprendizaje."
+    ],
+    [
+      "Educational Analytics",
+      "Indicadores interpretables vinculados a evidencia concreta."
+    ],
+    [
+      "Open Archive",
+      "Archivo editorial de materiales, versiones y decisiones."
+    ],
+    [
+      "Longitudinal Analysis",
+      "Evolución de cohortes, metodologías y resultados."
+    ],
+    [
+      "Pedagogical Experiments",
+      "Experimentos, réplicas y criterios de validez."
+    ]
+  ],
+  "inclusiveSections": [
+    "Normativa Nacional",
+    "Normativa Internacional",
+    "Servicios de Apoyo y Prestaciones Estatales",
+    "Material Bibliográfico",
+    "Recursos Educativos",
+    "Guías Pedagógicas",
+    "Accesibilidad",
+    "Derechos Humanos",
+    "Inclusión y Participación"
+  ],
+  "navItems": [
+    [
+      "knowledge-index",
+      "Índice"
+    ],
+    [
+      "research-archive",
+      "Archivo"
+    ],
+    [
+      "knowledge-graph",
+      "Grafo"
+    ],
+    [
+      "inclusive-education",
+      "Educación inclusiva"
+    ],
+    [
+      "research-reader",
+      "Lectura"
+    ]
+  ],
+  "typeOrder": [
+    "all",
+    "research",
+    "methodology",
+    "observation",
+    "dataset",
+    "cohort",
+    "teacher",
+    "intelligence",
+    "skill",
+    "law",
+    "service",
+    "bibliography",
+    "framework"
+  ],
+  "selectedInitialId": "r-inclusive-transfer"
+}
