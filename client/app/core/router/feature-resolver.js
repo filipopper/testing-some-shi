@@ -9,6 +9,9 @@ const FEATURE_MODULES = Object.freeze({
   proposals: '../../features/proposals/controller.js',
   join: '../../features/join/controller.js',
   poll: '../../features/polls/controller.js',
+  research: '../../features/research/controller.js',
+  repository: '../../features/research/controller.js',
+  ecosystem: '../../features/research/controller.js',
 });
 
 const FEATURE_EXPORTS = Object.freeze({
@@ -20,6 +23,9 @@ const FEATURE_EXPORTS = Object.freeze({
   proposals: 'ProposalsController',
   join: 'JoinController',
   poll: 'PollController',
+  research: 'ResearchController',
+  repository: 'ResearchController',
+  ecosystem: 'ResearchController',
 });
 
 function resolveFeaturePath(viewId) {
