@@ -10,6 +10,7 @@ import {
   assertFunction
 } from './runtime-errors.js';
 import { logger } from './logger.js';
+import { MotionController } from '../shared/utils/motion.js';
 
 export class AppShell {
   constructor({
@@ -25,6 +26,8 @@ export class AppShell {
       defaultView: 'home',
       onRouteChange: (route) => this.renderRoute(route),
     });
+
+    this.motion = new MotionController();
   }
 
   init() {
@@ -41,6 +44,7 @@ export class AppShell {
     );
 
     this.router.init();
+    this.motion.init();
 
     this.updateActiveNav();
 
@@ -53,6 +57,7 @@ export class AppShell {
   dispose() {
     this.abortController.abort();
     this.router.dispose();
+    this.motion.dispose();
   }
 
   handleNavigationClick = (e) => {
@@ -153,6 +158,7 @@ export class AppShell {
     }
 
     this.updateActiveNav();
+    this.motion.refresh(content);
 
     logger.debug(
       'app-shell.renderRoute',

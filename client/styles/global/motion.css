@@ -1,0 +1,384 @@
+/* ══════════════════════════════════════════════════════════════
+   MOTION SYSTEM — refinamiento cinematográfico premium
+   Solo tokens, microinteracciones y reveal progresivo.
+══════════════════════════════════════════════════════════════ */
+
+:root {
+  --motion-ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-fast: 180ms;
+  --motion-normal: 420ms;
+  --motion-cinematic: 640ms;
+  --motion-slider: 700ms;
+  --motion-reveal-y: 30px;
+  --motion-reveal-y-mobile: 18px;
+  --shadow-premium: 0 18px 48px rgba(98, 22, 47, 0.14), 0 2px 10px rgba(67, 63, 69, 0.08);
+  --shadow-premium-soft: 0 12px 34px rgba(98, 22, 47, 0.1), 0 1px 6px rgba(67, 63, 69, 0.06);
+}
+
+/* Page and scroll reveal --------------------------------------------------- */
+.slide-in,
+.fade-in {
+  animation-duration: var(--motion-cinematic);
+  animation-timing-function: var(--motion-ease-cinematic);
+}
+
+.reveal-ready {
+  opacity: 0;
+  transform: translate3d(0, var(--motion-reveal-y), 0);
+  transition:
+    opacity var(--motion-cinematic) var(--motion-ease-cinematic),
+    transform var(--motion-cinematic) var(--motion-ease-cinematic),
+    filter var(--motion-cinematic) var(--motion-ease-cinematic);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-ready.reveal-in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.reveal-ready.reveal-out {
+  opacity: 0;
+  transform: translate3d(0, calc(var(--motion-reveal-y) * 0.55), 0);
+}
+
+.stagger-item {
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* Premium interaction primitives ------------------------------------------ */
+:is(.card, .news-item, .proposal-card, .proposal-card-home, .about-card, .join-aside-card, .wiki-toc, .wiki-infobox, .sv-root, .sv-config-panel, .proposals-transparency) {
+  transition:
+    transform var(--motion-normal) var(--motion-ease-cinematic),
+    opacity var(--motion-normal) var(--motion-ease-cinematic),
+    border-color var(--motion-normal) var(--motion-ease-cinematic),
+    box-shadow var(--motion-normal) var(--motion-ease-cinematic),
+    background var(--motion-normal) var(--motion-ease-cinematic),
+    filter var(--motion-normal) var(--motion-ease-cinematic);
+}
+
+:is(.card, .news-item, .proposal-card, .proposal-card-home, .about-card, .join-aside-card, .wiki-toc, .proposals-transparency):hover {
+  box-shadow: var(--shadow-premium-soft);
+}
+
+:is(.card, .news-item, .proposal-card, .proposal-card-home, .about-card, .join-aside-card):focus-within {
+  border-color: var(--c-pale);
+  box-shadow: var(--shadow-premium-soft);
+}
+
+:is(.btn, .tag, .prop-filter, .sv-var-opt, .sv-qty-btn, .sv-add-btn, .sv-checkout-btn, .sv-modal-confirm, .menu-toggle, .contact-social-item, .social-icons a, .proposal-accordion-btn) {
+  transition:
+    transform var(--motion-fast) var(--motion-ease-standard),
+    opacity var(--motion-fast) var(--motion-ease-standard),
+    color var(--motion-fast) var(--motion-ease-standard),
+    background var(--motion-fast) var(--motion-ease-standard),
+    border-color var(--motion-fast) var(--motion-ease-standard),
+    box-shadow var(--motion-fast) var(--motion-ease-standard),
+    filter var(--motion-fast) var(--motion-ease-standard);
+}
+
+:is(.btn, .prop-filter, .sv-var-opt, .sv-qty-btn, .sv-add-btn, .sv-checkout-btn, .sv-modal-confirm, .menu-toggle, .contact-social-item):active {
+  transform: scale(0.975);
+  opacity: 0.92;
+}
+
+:is(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--c-lt);
+  outline-offset: 3px;
+}
+
+/* Group choreography -------------------------------------------------------- */
+.motion-group,
+.news-item,
+.proposal-card-home,
+.proposal-card,
+.sv-product-row,
+.about-card,
+.wiki-toc,
+.contact-social-item {
+  isolation: isolate;
+}
+
+.news-item::after,
+.proposal-card-home::after,
+.about-card::after,
+.sv-product-row::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-normal) var(--motion-ease-cinematic);
+  z-index: 0;
+}
+
+.news-item:hover::after,
+.proposal-card-home:hover::after,
+.about-card:hover::after,
+.sv-product-row:hover::after {
+  opacity: 1;
+}
+
+.news-item > *,
+.proposal-card-home > *,
+.about-card > *,
+.sv-product-row > * {
+  position: relative;
+  z-index: 1;
+}
+
+.news-item:hover h4,
+.proposal-card-home:hover h4,
+.about-card:hover h3,
+.about-card:hover h4 {
+  transform: translate3d(0, -1px, 0);
+}
+
+.news-item h4,
+.proposal-card-home h4,
+.about-card h3,
+.about-card h4,
+.news-item .read-more,
+.proposal-card-home-link,
+.proposals-doc-links a,
+.contact-social-item i {
+  transition:
+    transform var(--motion-normal) var(--motion-ease-cinematic),
+    opacity var(--motion-normal) var(--motion-ease-cinematic),
+    color var(--motion-normal) var(--motion-ease-cinematic),
+    gap var(--motion-normal) var(--motion-ease-cinematic);
+}
+
+.news-item:hover .read-more,
+.proposal-card-home:hover .proposal-card-home-link,
+.proposals-doc-links a:hover,
+.contact-social-item:hover i {
+  transform: translate3d(2px, 0, 0);
+}
+
+/* Image treatment ---------------------------------------------------------- */
+:is(.news-item, .about-gallery-slide, .wiki-slide, .sv-product-img, .sv-config-img-wrap, .sv-cart-item-img, .wiki-infobox-avatar) img {
+  transition:
+    transform var(--motion-slider) var(--motion-ease-cinematic),
+    filter var(--motion-slider) var(--motion-ease-cinematic),
+    opacity var(--motion-normal) var(--motion-ease-cinematic);
+}
+
+.news-item > img,
+.about-gallery-slide img,
+.wiki-slide img,
+.sv-product-img img,
+.sv-config-img {
+  filter: grayscale(14%) saturate(0.92) brightness(0.98);
+}
+
+:is(.news-item:hover, .news-item:focus-within) > img,
+.about-gallery-slide:hover img,
+.wiki-slide.active img,
+.sv-product-row:hover .sv-product-img img,
+.sv-product-row.active .sv-product-img img,
+.sv-config-img-wrap:hover .sv-config-img {
+  filter: grayscale(0) saturate(1.03) brightness(1.01);
+  transform: scale(1.035);
+}
+
+.news-item {
+  transform: translateZ(0);
+}
+
+.news-item:hover {
+  transform: translate3d(0, -5px, 0);
+  box-shadow: var(--shadow-premium);
+}
+
+/* Header refinement -------------------------------------------------------- */
+header#main-header,
+header#main-header .container,
+#nav-links li a,
+#nav-links li a::after,
+.menu-toggle {
+  transition:
+    height var(--motion-normal) var(--motion-ease-cinematic),
+    min-height var(--motion-normal) var(--motion-ease-cinematic),
+    background var(--motion-normal) var(--motion-ease-cinematic),
+    border-color var(--motion-normal) var(--motion-ease-cinematic),
+    box-shadow var(--motion-normal) var(--motion-ease-cinematic),
+    transform var(--motion-normal) var(--motion-ease-cinematic),
+    opacity var(--motion-normal) var(--motion-ease-cinematic),
+    color var(--motion-normal) var(--motion-ease-cinematic);
+}
+
+header#main-header.is-sticky .container {
+  height: 58px;
+}
+
+header#main-header.is-sticky #nav-links li a {
+  height: 58px;
+}
+
+.svg-container svg {
+  transition: transform var(--motion-normal) var(--motion-ease-cinematic), opacity var(--motion-normal) var(--motion-ease-cinematic);
+}
+
+header#main-header.is-sticky .svg-container svg {
+  transform: scale(0.965);
+  transform-origin: left center;
+}
+
+/* Dropdowns / accordions --------------------------------------------------- */
+.proposal-card {
+  transition:
+    transform var(--motion-normal) var(--motion-ease-cinematic),
+    box-shadow var(--motion-normal) var(--motion-ease-cinematic),
+    border-color var(--motion-normal) var(--motion-ease-cinematic);
+}
+
+.proposal-card:hover {
+  transform: translate3d(0, -2px, 0);
+  border-color: var(--c-pale);
+}
+
+.proposal-card-body {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translate3d(0, -6px, 0);
+  transition:
+    max-height var(--motion-cinematic) var(--motion-ease-cinematic),
+    opacity var(--motion-normal) var(--motion-ease-cinematic),
+    transform var(--motion-normal) var(--motion-ease-cinematic),
+    padding var(--motion-normal) var(--motion-ease-cinematic);
+}
+
+.proposal-card.open .proposal-card-body {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.proposal-accordion-btn i {
+  transition: transform var(--motion-normal) var(--motion-ease-cinematic);
+}
+
+.proposal-card.open .proposal-accordion-btn i {
+  transform: rotate(180deg);
+}
+
+/* Slider / carousel motion ------------------------------------------------- */
+.wiki-slider {
+  overflow: hidden;
+}
+
+.wiki-slide {
+  opacity: 0;
+  transform: translate3d(10px, 0, 0) scale(0.995);
+  transition:
+    opacity var(--motion-slider) var(--motion-ease-standard),
+    transform var(--motion-slider) var(--motion-ease-standard),
+    max-height var(--motion-slider) var(--motion-ease-standard);
+}
+
+.wiki-slide.active {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.wiki-dot {
+  transition:
+    background var(--motion-fast) var(--motion-ease-standard),
+    transform var(--motion-fast) var(--motion-ease-standard),
+    opacity var(--motion-fast) var(--motion-ease-standard);
+}
+
+/* Store and active states -------------------------------------------------- */
+.sv-product-row {
+  transition:
+    background var(--motion-normal) var(--motion-ease-cinematic),
+    border-color var(--motion-normal) var(--motion-ease-cinematic),
+    transform var(--motion-normal) var(--motion-ease-cinematic),
+    box-shadow var(--motion-normal) var(--motion-ease-cinematic);
+}
+
+.sv-product-row:hover {
+  transform: translate3d(2px, 0, 0);
+}
+
+.sv-product-row.active {
+  box-shadow: inset 10px 0 18px rgba(98, 22, 47, 0.045);
+}
+
+.sv-var-opt.selected,
+.prop-filter.active,
+#nav-links li a.active {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Subtle glass/depth -------------------------------------------------------- */
+.news-controls,
+.tags-filter,
+.proposals-filters,
+.sv-cart-head,
+.sv-config-panel,
+.wiki-toc {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Responsive and accessibility -------------------------------------------- */
+@media (max-width: 768px) {
+  :root {
+    --motion-reveal-y: var(--motion-reveal-y-mobile);
+    --motion-cinematic: 520ms;
+    --motion-slider: 560ms;
+  }
+
+  header#main-header.is-sticky .container,
+  header#main-header.is-sticky #nav-links li a {
+    height: 56px;
+  }
+
+  .news-item:hover,
+  .proposal-card:hover,
+  .proposal-card-home:hover,
+  .about-card:hover,
+  .sv-product-row:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .reveal-ready,
+  .reveal-ready.reveal-in,
+  .reveal-ready.reveal-out {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+.motion-group,
+.about-card,
+.sv-product-row {
+  position: relative;
+}
+
+.wiki-slide {
+  display: block;
+  max-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.wiki-slide.active {
+  max-height: 280px;
+  pointer-events: auto;
+}
