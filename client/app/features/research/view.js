@@ -1,73 +1,78 @@
-const liveEvents = [
-  ['08:42', 'Nueva observación registrada', 'Aula 3 · secuencia de lectura inferencial', 'observation'],
-  ['08:57', 'Hipótesis actualizada', 'La pausa metacognitiva aumenta persistencia en resolución abierta', 'hypothesis'],
-  ['09:11', 'Dataset expandido', '124 nuevas evidencias cualitativas vinculadas a colaboración', 'dataset'],
-  ['09:28', 'Correlación encontrada', 'Ritmo de feedback docente ↔ autonomía percibida', 'signal'],
-  ['09:46', 'Metodología evaluada', 'Seminario socrático breve en cohorte de ciclo básico', 'method'],
-  ['10:03', 'Experimento replicado', 'Transferencia de estrategia visual a matemática aplicada', 'replication'],
-];
+const escapeHTML = (value = '') => String(value)
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;')
+  .replaceAll("'", '&#039;');
 
-const papers = [
-  {
-    code: 'EDU-R-041',
-    state: 'En revisión metodológica',
-    title: 'Micro-pausas metacognitivas y persistencia cognitiva en tareas abiertas',
-    hypothesis: 'Una pausa de 90 segundos para verbalizar estrategia aumenta la continuidad atencional sin elevar carga afectiva.',
-    method: 'Observación mixta · 4 cohortes · rúbrica de autonomía · entrevistas breves',
-    metric: '+18%',
-    metricLabel: 'persistencia observada',
-    tags: ['metacognición', 'autonomía', 'feedback'],
-  },
-  {
-    code: 'MTH-X-017',
-    state: 'Replicación activa',
-    title: 'Transferencia visual entre razonamiento geométrico y modelado algebraico',
-    hypothesis: 'El bocetado estructural previo reduce fricción simbólica en estudiantes con inteligencia espacial dominante.',
-    method: 'A/B pedagógico · 6 docentes · dataset multimodal · revisión semanal',
-    metric: '3.2x',
-    metricLabel: 'conexiones declaradas',
-    tags: ['espacial', 'matemática', 'transferencia'],
-  },
-  {
-    code: 'HUM-O-029',
-    state: 'Síntesis editorial',
-    title: 'Conversación socrática breve como arquitectura de escucha profunda',
-    hypothesis: 'La pregunta de seguimiento cuidadosamente demorada eleva densidad argumental y escucha entre pares.',
-    method: 'Codificación discursiva · seminarios de 18 min · matriz de evidencia',
-    metric: '+31%',
-    metricLabel: 'calidad argumental',
-    tags: ['lenguaje', 'ética', 'colaboración'],
-  },
-];
+const parseMarkdown = (text = '') => {
+  const source = String(text || '');
 
-const graphNodes = [
-  ['Metacognición', 'research-node-large', '18 papers'],
-  ['Feedback docente', '', '7 metodologías'],
-  ['Inteligencia espacial', '', '5 cohortes'],
-  ['Lectura inferencial', '', '216 observaciones'],
-  ['Autonomía', 'research-node-quiet', '12 señales'],
-  ['Dataset C-24', '', '842 evidencias'],
-  ['Seminario socrático', '', '4 réplicas'],
-  ['Persistencia', 'research-node-quiet', '9 correlaciones'],
-];
+  return window.marked?.parse
+    ? window.marked.parse(escapeHTML(source))
+    : escapeHTML(source).replace(/\n/g, '<br>');
+};
+
+function formatDate(value) {
+  return new Date(`${value}T12:00:00`).toLocaleDateString('es-UY', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
+}
+
+const liveEventLabels = {
+  observation: 'observación',
+  hypothesis: 'hipótesis',
+  dataset: 'dataset',
+  signal: 'correlación',
+  method: 'metodología',
+  replication: 'réplica',
+};
 
 export class ResearchView {
-  constructor() {
+  constructor(repository) {
+    this.repository = repository;
     this.content = document.getElementById('content');
+
+    this.activeTag = 'all';
+    this.activeType = 'all';
+    this.activeSection = 'all';
+    this.query = '';
+
+    this.selectedId = repository?.selectedInitialId || null;
   }
 
   render() {
+    const {
+      entities,
+      hubSections,
+      inclusiveSections,
+      navItems,
+      typeOrder,
+      entityTypes,
+      liveEvents = [],
+    } = this.repository.getSnapshot();
+
+    const typeLabels = {
+      all: 'Todo',
+      ...entityTypes,
+    };
+
+    const uniqueTags = this.repository.getUniqueTags();
+
+    const scopedResearch = entities.filter((entity) => entity.type === 'research');
+
     this.content.innerHTML = `
-      <div class="research-page" aria-labelledby="research-title">
+      <main class="research-page" aria-labelledby="research-title">
         <div class="research-entry-veil" aria-hidden="true"></div>
 
-        <nav class="research-system-header" aria-label="Sistema de investigación educativa">
-          <a href="#" data-research-jump="research-papers">Papers</a>
-          <a href="#" data-research-jump="research-papers">Experiments</a>
-          <a href="#" data-research-jump="research-live">Observations</a>
-          <a href="#" data-research-jump="research-papers">Methodologies</a>
-          <a href="#" data-research-jump="research-map">Intelligence Map</a>
-          <a href="#" data-research-jump="research-live">Live Activity</a>
+        <nav class="research-system-header" aria-label="Navegación del repositorio de investigación">
+          ${navItems.map(([id, label]) => `
+            <a href="#${id}" data-research-jump="${id}">
+              ${label}
+            </a>
+          `).join('')}
         </nav>
 
         <section class="research-hero" aria-labelledby="research-title">
@@ -78,120 +83,968 @@ export class ResearchView {
             <span style="--x:34%;--y:76%;--d:.7s"></span>
             <span style="--x:52%;--y:46%;--d:1.9s"></span>
           </div>
+
           <div class="research-hero-copy">
-            <span class="overline">Repositorio epistemológico · Beta privada</span>
-            <h1 id="research-title">Ecosistema de Investigación Educativa Continua</h1>
-            <p>La escuela no solo enseña.<br>Produce conocimiento sobre cómo aprenden las personas.</p>
+            <span class="research-kicker">
+              Infraestructura institucional de conocimiento
+            </span>
+
+            <h1 id="research-title">
+              Ecosistema de Investigación Educativa Continua
+            </h1>
+
+            <p>
+              La escuela no solo enseña.
+              Produce, conecta y versiona conocimiento sobre cómo aprenden las personas.
+            </p>
           </div>
-          <aside class="research-hero-index" aria-label="Pulso institucional">
-            <div><strong>247</strong><span>observaciones activas</span></div>
-            <div><strong>38</strong><span>hipótesis en seguimiento</span></div>
-            <div><strong>12</strong><span>metodologías replicadas</span></div>
+
+          <aside class="research-hero-index" aria-label="Resumen del sistema">
+            <a href="#research-archive" data-filter-type="research">
+              <strong>${scopedResearch.length}</strong>
+              <span>papers vivos</span>
+            </a>
+
+            <a href="#knowledge-graph">
+              <strong>${this.repository.graphEdges().length}</strong>
+              <span>relaciones semánticas</span>
+            </a>
+
+            <a
+              href="#inclusive-education"
+              data-filter-section="Inclusive Education"
+            >
+              <strong>
+                ${this.repository.filterEntities({
+                  section: 'Inclusive Education',
+                }).length}
+              </strong>
+
+              <span>recursos de inclusión</span>
+            </a>
           </aside>
         </section>
 
-        <section class="research-live" id="research-live" aria-labelledby="live-title">
-          <div class="research-section-kicker">Live Activity System</div>
-          <div class="research-live-shell">
-            <div class="research-live-head">
-              <h2 id="live-title">Actividad institucional en tiempo real</h2>
-              <span>stream académico · UTC-03</span>
+        ${liveEvents.length ? `
+          <section
+            class="research-live"
+            id="research-live"
+            aria-labelledby="live-title"
+          >
+            <div class="research-section-kicker">
+              Actividad institucional
             </div>
-            <ol class="research-activity-list">
-              ${liveEvents.map(([time, title, desc, type], index) => `
-                <li class="research-activity-item" style="--i:${index}">
-                  <time>${time}</time>
-                  <div>
-                    <strong>${title}</strong>
-                    <span>${desc}</span>
-                  </div>
-                  <em>${type}</em>
-                </li>
-              `).join('')}
-            </ol>
-          </div>
-        </section>
 
-        <section class="research-grid-section" id="research-papers" aria-labelledby="papers-title">
-          <div class="research-section-header">
-            <div>
-              <span class="research-section-kicker">Research Grid</span>
-              <h2 id="papers-title">Artefactos de investigación vivos</h2>
-            </div>
-            <p>Cada publicación integra hipótesis, evidencia, metodología, estado experimental y conexiones cognitivas.</p>
-          </div>
-          <div class="research-paper-grid">
-            ${papers.map((paper, index) => `
-              <article class="research-paper" style="--i:${index}">
-                <div class="research-paper-meta"><span>${paper.code}</span><span>${paper.state}</span></div>
-                <h3>${paper.title}</h3>
-                <p class="research-hypothesis">${paper.hypothesis}</p>
-                <dl>
-                  <div><dt>Metodología</dt><dd>${paper.method}</dd></div>
-                  <div><dt>${paper.metric}</dt><dd>${paper.metricLabel}</dd></div>
-                </dl>
-                <div class="research-tags">${paper.tags.map((tag) => `<span>${tag}</span>`).join('')}</div>
-                <button type="button" data-research-open="${index}">Abrir experiencia editorial</button>
-              </article>
-            `).join('')}
-          </div>
-        </section>
+            <div class="research-live-shell">
+              <div class="research-live-head">
+                <h2 id="live-title">
+                  Flujo vivo de observaciones y experimentos
+                </h2>
 
-        <section class="research-map-section" id="research-map" aria-labelledby="map-title">
-          <div class="research-section-header">
-            <div>
-              <span class="research-section-kicker">Intelligence Map</span>
-              <h2 id="map-title">Mapa vivo de inteligencia educativa</h2>
-            </div>
-            <p>Un grafo de investigaciones, metodologías, docentes, habilidades, resultados y datasets institucionales.</p>
-          </div>
-          <div class="research-graph" role="img" aria-label="Grafo conceptual de conexiones educativas">
-            ${graphNodes.map(([label, className, note], index) => `
-              <div class="research-node ${className}" style="--n:${index}">
-                <strong>${label}</strong>
-                <span>${note}</span>
+                <span>stream académico · UTC-03</span>
               </div>
+
+              <ol class="research-activity-list">
+                ${liveEvents.map(([time, title, desc, type], index) => `
+                  <li
+                    class="research-activity-item"
+                    style="--i:${index}"
+                  >
+                    <time>${time}</time>
+
+                    <div>
+                      <strong>${title}</strong>
+                      <span>${desc}</span>
+                    </div>
+
+                    <em>${liveEventLabels[type] || type}</em>
+                  </li>
+                `).join('')}
+              </ol>
+            </div>
+          </section>
+        ` : ''}
+
+        <section
+          class="research-index"
+          id="knowledge-index"
+          aria-labelledby="knowledge-index-title"
+        >
+          <div class="research-section-header">
+            <div>
+              <span class="research-kicker">
+                Arquitectura de información
+              </span>
+
+              <h2 id="knowledge-index-title">
+                Sub-vistas especializadas interconectadas
+              </h2>
+            </div>
+
+            <p>
+              El repositorio se organiza como una biblioteca viva:
+              cada sub-vista comparte entidades, tags, citas internas
+              y relaciones de evidencia.
+            </p>
+          </div>
+
+          <div class="research-hub-grid">
+            ${hubSections.map(([title, desc]) => `
+              <button
+                class="research-hub-card"
+                type="button"
+                data-filter-section="${title}"
+              >
+                <span>${title}</span>
+                <small>${desc}</small>
+              </button>
             `).join('')}
           </div>
         </section>
 
-        <section class="research-article" id="research-article" aria-live="polite">
-          <div class="research-article-rail">
-            <span>Timeline</span><span>Hipótesis</span><span>Evidencia</span><span>Replicabilidad</span>
-          </div>
-          <article>
-            <span class="research-section-kicker">Interactive Paper · EDU-R-041</span>
-            <h2>Micro-pausas metacognitivas y persistencia cognitiva</h2>
-            <p class="research-article-lede">Experiencia editorial abierta: no es un PDF, es una bitácora metodológica con evidencia, revisiones y conexiones trazables.</p>
-            <div class="research-article-grid">
-              <div><h3>01 · Hipótesis</h3><p>Las pausas para explicitar estrategia convierten incertidumbre en material observable y mejoran persistencia.</p></div>
-              <div><h3>02 · Metodología</h3><p>Cuatro cohortes, observación de aula, entrevista breve, rúbrica de autonomía y revisión docente semanal.</p></div>
-              <div><h3>03 · Evidencia</h3><p>84 registros cualitativos, 32 artefactos de clase, 6 patrones recurrentes y un dataset en expansión.</p></div>
-              <div><h3>04 · Replicabilidad</h3><p>Protocolo mínimo documentado, condiciones de aula anotadas y comentarios metodológicos versionados.</p></div>
+        <section
+          class="research-archive"
+          id="research-archive"
+          aria-labelledby="archive-title"
+        >
+          <div class="research-section-header">
+            <div>
+              <span class="research-kicker">
+                Repositorio navegable
+              </span>
+
+              <h2 id="archive-title">
+                Descubrimiento, filtros y trazabilidad
+              </h2>
             </div>
-          </article>
+
+            <p>
+              Buscar por hipótesis, normativa, docente, cohorte,
+              dataset, habilidad cognitiva o relación conceptual.
+            </p>
+          </div>
+
+          <form
+            class="research-controls"
+            role="search"
+            aria-label="Búsqueda contextual del repositorio"
+          >
+            <label class="research-search">
+              <span>Buscar</span>
+
+              <input
+                id="research-query"
+                type="search"
+                autocomplete="off"
+                placeholder="Ej. Salamanca, metacognición, AYEX, cohorte 2024…"
+              />
+            </label>
+
+            <label class="research-select">
+              <span>Tipo de entidad</span>
+
+              <select id="research-type">
+                ${typeOrder.map((type) => `
+                  <option value="${type}">
+                    ${typeLabels[type]}
+                  </option>
+                `).join('')}
+              </select>
+            </label>
+
+            <label class="research-select">
+              <span>Sub-vista</span>
+
+              <select id="research-section">
+                <option value="all">Todas</option>
+
+                ${hubSections.map(([title]) => `
+                  <option value="${title}">
+                    ${title}
+                  </option>
+                `).join('')}
+              </select>
+            </label>
+          </form>
+
+          <div
+            class="research-tag-rail"
+            role="group"
+            aria-label="Tags semánticos"
+          >
+            <button
+              class="is-active"
+              type="button"
+              data-filter-tag="all"
+            >
+              Todos los tags
+            </button>
+
+            ${uniqueTags.map((tag) => `
+              <button
+                type="button"
+                data-filter-tag="${tag}"
+              >
+                ${tag}
+              </button>
+            `).join('')}
+          </div>
+
+          <p
+            class="research-results-count"
+            id="research-results-count"
+            aria-live="polite"
+          ></p>
+
+          <div
+            class="research-results"
+            id="research-results"
+          ></div>
         </section>
-      </div>`;
+
+        <section
+          class="research-graph-section"
+          id="knowledge-graph"
+          aria-labelledby="graph-title"
+        >
+          <div class="research-section-header">
+            <div>
+              <span class="research-kicker">
+                Knowledge graph real
+              </span>
+
+              <h2 id="graph-title">
+                Mapa epistemológico navegable
+              </h2>
+            </div>
+
+            <p>
+              Cada nodo representa una entidad del repositorio.
+              Las conexiones se calculan por citas internas explícitas
+              y tags compartidos.
+            </p>
+          </div>
+
+          <div class="research-graph-layout">
+            <div
+              class="research-node-list"
+              id="research-node-list"
+              aria-label="Nodos del grafo"
+            ></div>
+
+            <div
+              class="research-edge-list"
+              aria-labelledby="edge-title"
+            >
+              <h3 id="edge-title">
+                Relaciones detectadas
+              </h3>
+
+              <div id="research-edge-list"></div>
+            </div>
+
+            <aside
+              class="research-entity-panel"
+              id="research-entity-panel"
+              aria-live="polite"
+            ></aside>
+          </div>
+        </section>
+
+        <section
+          class="research-inclusive"
+          id="inclusive-education"
+          aria-labelledby="inclusive-title"
+        >
+          <div class="research-section-header">
+            <div>
+              <span class="research-kicker">
+                Sub-vista especializada
+              </span>
+
+              <h2 id="inclusive-title">
+                Educación Inclusiva como biblioteca jurídica viva
+              </h2>
+            </div>
+
+            <p>
+              Normativa, prestaciones estatales, bibliografía
+              y recursos pedagógicos conectados con investigaciones
+              y observaciones.
+            </p>
+          </div>
+
+          <div
+            class="inclusive-sections"
+            aria-label="Secciones de educación inclusiva"
+          >
+            ${inclusiveSections.map((section) => `
+              <button
+                type="button"
+                data-inclusive-section="${section}"
+              >
+                ${section}
+              </button>
+            `).join('')}
+          </div>
+
+          <div
+            class="inclusive-grid"
+            id="inclusive-grid"
+          ></div>
+        </section>
+
+        <section
+          class="research-reader"
+          id="research-reader"
+          aria-labelledby="reader-title"
+        >
+          <div class="research-section-header">
+            <div>
+              <span class="research-kicker">
+                Experiencia de lectura
+              </span>
+
+              <h2 id="reader-title">
+                Paper interactivo, versionado y citable
+              </h2>
+            </div>
+
+            <p>
+              Lectura larga con hipótesis, metodología, evidencia,
+              timeline, datasets, normativa y bibliografía relacionada.
+            </p>
+          </div>
+
+          <div
+            class="research-reader-shell"
+            id="research-reader-shell"
+          ></div>
+        </section>
+      </main>
+    `;
+
+    this.updateResults();
+    this.updateGraph();
+    this.updateInclusive();
+    this.updateReader();
   }
 
   bindInteractions() {
-    const article = this.content.querySelector('#research-article');
-    const buttons = this.content.querySelectorAll('[data-research-open]');
-
-    buttons.forEach((button) => {
-      button.addEventListener('click', () => {
-        article?.classList.add('is-open');
-        article?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    });
-
     this.content.querySelectorAll('[data-research-jump]').forEach((link) => {
       link.addEventListener('click', (event) => {
         event.preventDefault();
-        const targetId = link.getAttribute('data-research-jump');
-        const target = targetId ? this.content.querySelector(`#${targetId}`) : null;
-        target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        this.content
+          .querySelector(`#${link.dataset.researchJump}`)
+          ?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
       });
     });
+
+    this.content.querySelector('#research-query')
+      ?.addEventListener('input', (event) => {
+        this.query = event.target.value.trim().toLowerCase();
+
+        this.updateResults();
+        this.updateGraph();
+      });
+
+    this.content.querySelector('#research-type')
+      ?.addEventListener('change', (event) => {
+        this.activeType = event.target.value;
+
+        this.updateResults();
+        this.updateGraph();
+      });
+
+    this.content.querySelector('#research-section')
+      ?.addEventListener('change', (event) => {
+        this.activeSection = event.target.value;
+
+        this.updateResults();
+        this.updateGraph();
+      });
+
+    this.content.querySelectorAll('[data-filter-tag]').forEach((button) => {
+      button.addEventListener('click', () => {
+        this.activeTag = button.dataset.filterTag;
+
+        this.content
+          .querySelectorAll('[data-filter-tag]')
+          .forEach((item) => {
+            item.classList.toggle(
+              'is-active',
+              item === button,
+            );
+          });
+
+        this.updateResults();
+        this.updateGraph();
+      });
+    });
+
+    this.content.querySelectorAll('[data-filter-type]').forEach((button) => {
+      button.addEventListener('click', () => {
+        this.activeType = button.dataset.filterType;
+
+        const select = this.content.querySelector('#research-type');
+
+        if (select) {
+          select.value = this.activeType;
+        }
+
+        this.updateResults();
+        this.updateGraph();
+      });
+    });
+
+    this.content.querySelectorAll('[data-filter-section]').forEach((button) => {
+      button.addEventListener('click', () => {
+        this.activeSection = button.dataset.filterSection;
+
+        const select = this.content.querySelector('#research-section');
+
+        if (select) {
+          select.value = this.activeSection;
+        }
+
+        this.updateResults();
+        this.updateGraph();
+      });
+    });
+
+    this.content.querySelectorAll('[data-inclusive-section]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const query = button.dataset.inclusiveSection.toLowerCase();
+
+        const input = this.content.querySelector('#research-query');
+
+        this.activeSection = 'Inclusive Education';
+
+        this.query =
+          query.includes('normativa nacional')
+            ? 'normativa nacional'
+            : query.includes('normativa internacional')
+              ? 'normativa internacional'
+              : query.includes('servicios')
+                ? 'servicio de apoyo'
+                : query.includes('bibliográfico')
+                  ? 'bibliografía'
+                  : query;
+
+        if (input) {
+          input.value = this.query;
+        }
+
+        const select = this.content.querySelector('#research-section');
+
+        if (select) {
+          select.value = this.activeSection;
+        }
+
+        this.updateResults();
+        this.updateGraph();
+
+        this.content
+          .querySelector('#research-archive')
+          ?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+      });
+    });
+  }
+
+  filteredEntities() {
+    return this.repository.filterEntities({
+      query: this.query,
+      type: this.activeType,
+      section: this.activeSection,
+      tag: this.activeTag,
+    });
+  }
+
+  updateResults() {
+    const results = this.filteredEntities();
+
+    const count = this.content.querySelector('#research-results-count');
+    const container = this.content.querySelector('#research-results');
+
+    if (!container) return;
+
+    if (count) {
+      count.textContent =
+        `${results.length} entidad${results.length === 1 ? '' : 'es'} en la vista actual`;
+    }
+
+    container.innerHTML = results.length
+      ? results.map((entity) => this.renderEntityCard(entity)).join('')
+      : `
+        <div class="research-empty">
+          No se encontraron entidades.
+          Ajustá búsqueda, tags o sub-vista.
+        </div>
+      `;
+
+    container
+      .querySelectorAll('[data-open-entity]')
+      .forEach((button) => {
+        button.addEventListener('click', () => {
+          this.openEntity(button.dataset.openEntity);
+        });
+      });
+  }
+
+  updateGraph() {
+    const scoped = this.filteredEntities().slice(0, 18);
+
+    const nodes = this.content.querySelector('#research-node-list');
+    const edges = this.content.querySelector('#research-edge-list');
+
+    if (!nodes || !edges) return;
+
+    nodes.innerHTML = scoped.map((entity) => `
+      <button
+        class="research-node"
+        type="button"
+        data-open-entity="${entity.id}"
+      >
+        <span>${this.repository.entityTypes[entity.type]}</span>
+
+        <strong>${entity.title}</strong>
+
+        <small>
+          ${entity.tags.slice(0, 3).join(' · ')}
+        </small>
+      </button>
+    `).join('');
+
+    const scopedEdges = this.repository.graphEdges(scoped);
+
+    edges.innerHTML = scopedEdges.length
+      ? scopedEdges.map(({ source, target, shared }) => `
+          <button
+            class="research-edge"
+            type="button"
+            data-open-entity="${source.id}"
+          >
+            <span>${source.title}</span>
+
+            <em>↔ ${target.title}</em>
+
+            <small>
+              ${shared.length
+                ? shared.join(' · ')
+                : 'cita interna explícita'}
+            </small>
+          </button>
+        `).join('')
+      : `
+        <p class="research-empty">
+          No hay relaciones suficientes con los filtros actuales.
+        </p>
+      `;
+
+    [
+      ...nodes.querySelectorAll('[data-open-entity]'),
+      ...edges.querySelectorAll('[data-open-entity]'),
+    ].forEach((button) => {
+      button.addEventListener('click', () => {
+        this.openEntity(button.dataset.openEntity);
+      });
+    });
+
+    this.renderEntityPanel(
+      this.repository.getEntityById(this.selectedId)
+      || scoped[0]
+      || this.repository.getSnapshot().entities[0],
+    );
+  }
+
+  updateInclusive() {
+    const container = this.content.querySelector('#inclusive-grid');
+
+    if (!container) return;
+
+    const inclusive = this.repository.filterEntities({
+      section: 'Inclusive Education',
+    });
+
+    container.innerHTML = inclusive
+      .map((entity) => this.renderInclusiveCard(entity))
+      .join('');
+
+    container
+      .querySelectorAll('[data-open-entity]')
+      .forEach((button) => {
+        button.addEventListener('click', () => {
+          this.openEntity(button.dataset.openEntity);
+        });
+      });
+  }
+
+  updateReader() {
+    const shell = this.content.querySelector('#research-reader-shell');
+
+    const selected =
+      this.repository.getEntityById(this.selectedId)
+      || this.repository.getEntityById(this.repository.selectedInitialId);
+
+    if (!shell || !selected) return;
+
+    const related = this.repository.relatedEntities(selected, 10);
+
+    shell.innerHTML = `
+      <aside
+        class="reader-rail"
+        aria-label="Metadatos del documento"
+      >
+        <span>${this.repository.entityTypes[selected.type]}</span>
+
+        <strong>${selected.status}</strong>
+
+        <small>
+          Actualizado ${formatDate(selected.updated)}
+        </small>
+
+        <small>${selected.owner}</small>
+
+        <div>
+          ${selected.tags.map((tag) => `
+            <button
+              type="button"
+              data-filter-tag-reader="${tag}"
+            >
+              ${tag}
+            </button>
+          `).join('')}
+        </div>
+      </aside>
+
+      <article class="reader-document">
+        <header>
+          <p class="research-kicker">
+            ${selected.id}
+          </p>
+
+          <h3>${selected.title}</h3>
+
+          <p>${selected.subtitle}</p>
+        </header>
+
+        <section>
+          <h4>Resumen contextual</h4>
+          <p>${selected.summary}</p>
+        </section>
+
+        ${selected.hypothesis ? `
+          <section>
+            <h4>Hipótesis</h4>
+            <p>${selected.hypothesis}</p>
+          </section>
+        ` : ''}
+
+        ${selected.methodology ? `
+          <section>
+            <h4>Metodología</h4>
+            <p>${selected.methodology}</p>
+          </section>
+        ` : ''}
+
+        ${selected.evidence ? `
+          <section>
+            <h4>Evidencia y datasets</h4>
+
+            <ul>
+              ${selected.evidence.map((item) => `
+                <li>${item}</li>
+              `).join('')}
+            </ul>
+          </section>
+        ` : ''}
+
+        ${selected.markdown ? `
+          <section class="reader-markdown">
+            <h4>Lectura enriquecida</h4>
+            ${parseMarkdown(selected.markdown)}
+          </section>
+        ` : ''}
+
+        ${selected.versions ? `
+          <section>
+            <h4>Timeline de evolución</h4>
+
+            <ol class="reader-timeline">
+              ${selected.versions.map(([version, date, note]) => `
+                <li>
+                  <time>${formatDate(date)}</time>
+                  <strong>${version}</strong>
+                  <span>${note}</span>
+                </li>
+              `).join('')}
+            </ol>
+          </section>
+        ` : ''}
+
+        <section>
+          <h4>Referencias cruzadas y citación interna</h4>
+
+          <div class="reader-relations">
+            ${related.map((entity) => `
+              <button
+                type="button"
+                data-open-entity="${entity.id}"
+              >
+                <span>
+                  ${this.repository.entityTypes[entity.type]}
+                </span>
+
+                <strong>${entity.title}</strong>
+
+                <small>
+                  ${entity.tags.filter((tag) =>
+                    selected.tags.includes(tag),
+                  ).join(' · ') || 'cita interna'}
+                </small>
+              </button>
+            `).join('')}
+          </div>
+        </section>
+
+        ${selected.official ? `
+          <a
+            class="reader-official"
+            href="${selected.official}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Abrir referencia oficial
+          </a>
+        ` : ''}
+      </article>
+    `;
+
+    shell
+      .querySelectorAll('[data-open-entity]')
+      .forEach((button) => {
+        button.addEventListener('click', () => {
+          this.openEntity(button.dataset.openEntity);
+        });
+      });
+
+    shell
+      .querySelectorAll('[data-filter-tag-reader]')
+      .forEach((button) => {
+        button.addEventListener('click', () => {
+          this.activeTag = button.dataset.filterTagReader;
+
+          this.content
+            .querySelectorAll('[data-filter-tag]')
+            .forEach((item) => {
+              item.classList.toggle(
+                'is-active',
+                item.dataset.filterTag === this.activeTag,
+              );
+            });
+
+          this.updateResults();
+          this.updateGraph();
+        });
+      });
+  }
+
+  openEntity(id) {
+    this.selectedId = id;
+
+    const entity = this.repository.getEntityById(id);
+
+    if (!entity) return;
+
+    this.renderEntityPanel(entity);
+    this.updateReader();
+
+    this.content
+      .querySelector('#research-reader')
+      ?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+  }
+
+  renderEntityPanel(entity) {
+    const panel = this.content.querySelector('#research-entity-panel');
+
+    if (!panel || !entity) return;
+
+    const related = this.repository.relatedEntities(entity, 6);
+
+    panel.innerHTML = `
+      <span class="research-kicker">
+        Entidad seleccionada
+      </span>
+
+      <h3>${entity.title}</h3>
+
+      <p>${entity.summary}</p>
+
+      <dl>
+        <div>
+          <dt>Tipo</dt>
+          <dd>${this.repository.entityTypes[entity.type]}</dd>
+        </div>
+
+        <div>
+          <dt>Estado</dt>
+          <dd>${entity.status}</dd>
+        </div>
+
+        <div>
+          <dt>Responsable</dt>
+          <dd>${entity.owner}</dd>
+        </div>
+
+        <div>
+          <dt>Actualización</dt>
+          <dd>${formatDate(entity.updated)}</dd>
+        </div>
+      </dl>
+
+      <div class="panel-tags">
+        ${entity.tags.map((tag) => `
+          <span>${tag}</span>
+        `).join('')}
+      </div>
+
+      <h4>Conexiones próximas</h4>
+
+      ${related.map((item) => `
+        <button
+          type="button"
+          data-open-entity="${item.id}"
+        >
+          ${item.title}
+
+          <small>
+            ${entity.tags.filter((tag) =>
+              item.tags.includes(tag),
+            ).join(' · ') || 'cita interna'}
+          </small>
+        </button>
+      `).join('')}
+    `;
+
+    panel
+      .querySelectorAll('[data-open-entity]')
+      .forEach((button) => {
+        button.addEventListener('click', () => {
+          this.openEntity(button.dataset.openEntity);
+        });
+      });
+  }
+
+  renderEntityCard(entity) {
+    const related = this.repository.relatedEntities(entity, 4);
+
+    return `
+      <article class="research-entity-card">
+        <div class="entity-meta">
+          <span>
+            ${this.repository.entityTypes[entity.type]}
+          </span>
+
+          <time>
+            ${formatDate(entity.updated)}
+          </time>
+        </div>
+
+        <h3>${entity.title}</h3>
+
+        <p>${entity.summary}</p>
+
+        <dl>
+          <div>
+            <dt>Estado</dt>
+            <dd>${entity.status}</dd>
+          </div>
+
+          <div>
+            <dt>Responsable</dt>
+            <dd>${entity.owner}</dd>
+          </div>
+
+          <div>
+            <dt>Sub-vista</dt>
+            <dd>${entity.section}</dd>
+          </div>
+        </dl>
+
+        <div class="entity-tags">
+          ${entity.tags.slice(0, 6).map((tag) => `
+            <span>${tag}</span>
+          `).join('')}
+        </div>
+
+        <div
+          class="entity-relations"
+          aria-label="Relaciones principales"
+        >
+          ${related.map((item) => `
+            <button
+              type="button"
+              data-open-entity="${item.id}"
+            >
+              ${item.title}
+            </button>
+          `).join('')}
+        </div>
+
+        <button
+          class="entity-open"
+          type="button"
+          data-open-entity="${entity.id}"
+        >
+          Abrir lectura y trazabilidad
+        </button>
+      </article>
+    `;
+  }
+
+  renderInclusiveCard(entity) {
+    const details =
+      entity.type === 'law'
+        ? (entity.articles || []).slice(0, 3)
+        : entity.type === 'service'
+          ? (entity.requirements || []).slice(0, 3)
+          : entity.authors
+            ? [entity.authors, entity.isbn]
+            : entity.tags.slice(0, 3);
+
+    return `
+      <article class="inclusive-card">
+        <span>
+          ${this.repository.entityTypes[entity.type]}
+        </span>
+
+        <h3>${entity.title}</h3>
+
+        <p>${entity.summary}</p>
+
+        <ul>
+          ${details.map((item) => `
+            <li>${item}</li>
+          `).join('')}
+        </ul>
+
+        <button
+          type="button"
+          data-open-entity="${entity.id}"
+        >
+          Explorar entidad conectada
+        </button>
+      </article>
+    `;
   }
 }
