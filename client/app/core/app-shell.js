@@ -101,6 +101,8 @@ export class AppShell {
     const resolvedViewId = resolved?.resolvedViewId || fallbackView;
     const ControllerClass = resolved?.ControllerClass;
 
+    this.applyRouteAtmosphere(resolvedViewId);
+
     if (typeof ControllerClass !== 'function') {
       reportError('app-shell.renderRoute', new Error('Missing resolved controller class'), { viewId, resolvedViewId });
       return;
@@ -218,6 +220,19 @@ export class AppShell {
     void content.offsetWidth;
 
     content.classList.add('slide-in');
+  }
+
+  applyRouteAtmosphere(viewId) {
+    const researchViews = new Set([
+      'research',
+      'repository',
+      'ecosystem',
+    ]);
+
+    document.body.classList.toggle(
+      'research-system-active',
+      researchViews.has(viewId)
+    );
   }
 
   updateActiveNav() {
