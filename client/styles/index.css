@@ -9,4 +9,5 @@
 @import url("./features/about.css");
 @import url("./features/store.css");
 @import url("./features/polls.css");
+@import url("./global/motion.css");
 @import url("./global/mobile.css");
