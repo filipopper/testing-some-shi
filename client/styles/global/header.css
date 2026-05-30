@@ -176,6 +176,8 @@ nav.responsive-menu {
 #nav-links li:nth-child(4) a { animation: link-in .4s .26s both; }
 #nav-links li:nth-child(5) a { animation: link-in .4s .32s both; }
 #nav-links li:nth-child(6) a { animation: link-in .4s .38s both; }
+#nav-links li:nth-child(7) a { animation: link-in .4s .44s both; }
+#nav-links li:nth-child(8) a { animation: link-in .4s .50s both; }
 
 /* ── HAMBURGUESA ────────────────────────────────────────── */
 .menu-toggle {
