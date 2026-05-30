@@ -32,7 +32,13 @@ export class HashRouter {
 
   parse(hash = this.normalizeHash()) {
     let path = hash.replace(/^#\/?/, '');
-    if (!path) path = this.defaultView;
+
+    if (!path) {
+      path = location.pathname.replace(/^\/+|\/+$/g, '');
+    }
+
+    if (!path || path === 'index.html') path = this.defaultView;
+
     const [viewId, postId] = path.split('/');
     return { viewId, postId };
   }
